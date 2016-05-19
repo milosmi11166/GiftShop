@@ -1,3 +1,3 @@
 # GiftShop
 
-# Projekat iz pweb-a
+## Projekat iz pweb-a
