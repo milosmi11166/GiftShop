@@ -64,7 +64,7 @@
             $status="500";
 
             $error_description=array(
-                "message"=>"Internal server error"
+                "message"=>$e.message
             );
 
             $data=json_encode($error_description);
