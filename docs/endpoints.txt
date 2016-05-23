@@ -1,0 +1,60 @@
+Opis:
+--Strana
+http_metod  url    podaci_u_telu_zahteva   (komentar)	
+
+Endpointi su poredjani po redosledu implementacije
+
+
+
+--Pocetna strana
+
+GET /user?id
+GET /category
+GET /gift/latest?ownerId (poslednje postavljeni pokloni)
+
+
+--Pokloni u ponudi strana
+ 		
+GET /gift?ownerId&search_term   (ako se do strane doslo preko pretrage) ili
+GET /gift?ownerId&category_id   (ako se do strane doslo klikom na naziv kategorije)
+
+
+--Moji pokloni strana
+
+GET	/gift?ownerId
+DELETE  /gift?id				
+
+
+--Poklon strana
+
+GET /gift?id
+POST    /offer  json    (postavljanje ponude za predmet)
+
+
+--Dobijene ponude strana
+
+GET /offer:ownerId
+PUT /offer  json    (prihvatanje ponude)
+
+
+--Poslate ponude strana
+
+GET /offer:oferrerId
+PUT /offer  json    (izmena poslate ponude)
+
+
+--Poruke strana
+
+GET /user/id/conversation		
+GET /user/id/conversation?id	
+POST    /message    json
+
+
+--Login strana
+
+POST    /token  json
+
+
+--Register strana
+
+POST    /account/register   json
