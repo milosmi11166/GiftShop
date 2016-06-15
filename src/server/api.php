@@ -4,7 +4,33 @@
 
 	//include
 	include('classes/Gift.php');
-	
+	include('classes/User.php');
+    include('classes/Message.php');
+    include('classes/Offer.php');
+    include('classes/UserType.php');
+    include('classes/Category.php');
+    
+    function deserializeGift($json)
+    {
+        $d = json_decode($json, true);
+        
+        return new Gift($d['id'], $d['name'], $d['description'], $d['image1Path'], $d['image2Path'], $d['image3Path'], $d['active'], $d['categoryId'], $d['ownerId']);
+    }
+    
+    function deserializeOffer($json)
+    {
+        $d = json_decode($json, true);
+        
+        return new Offer($d['id'], $d['ownerId'], $d['offererId'], $d['giftId'], $d['created'], $d['accepted']);
+    }
+    
+    function deserializeUser($json)
+    {
+        $d = json_decode($json, true);
+        
+        return new User($d['id'], $d['email'], $d['password'], $d['fullName'], $d['address'], $d['phone'], $d['created'], $d['userTypeId']);
+    }
+    
     $supported_methods=array('get','post', 'put', 'delete');
 
 	$method=strtolower($_SERVER['REQUEST_METHOD']);
@@ -32,29 +58,137 @@
 
         switch($method){
             case 'get':
-                if($number_of_url_elements==1 and $url_elements[1]=='gift'){
-                    $gifts=$db->readAllGifts();
+                if($number_of_url_elements==1 and $url_elements[1]=='category'){
+                    
+                    $data=$db->readCategories();
                     
                     $status=200;
-					$data=json_encode($gifts);
+                }
+                else if($number_of_url_elements==3 and $url_elements[1]=='user' and $url_elements[2]=='id'){
+                    
+                    $id = $url_elements[3];
+                    
+                    $data=$db->readUser($id);
+                    
+                    $status=200;
+                }
+                else if($number_of_url_elements==3 and $url_elements[1]=='gift' and $url_elements[2]=='id'){
+                    
+                    $id = $url_elements[3];
+                    
+                    $data=$db->readGift($id);
+                    
+                    $status=200;
+                }
+                else if($number_of_url_elements==3 and $url_elements[1]=='gift' and $url_elements[2]=='ownerId'){
+                    
+                    $ownerId = $url_elements[3];
+                    
+                    $data=$db->readGiftsForOwner($ownerId);
+                    
+                    $status=200;
+                }
+                else if($number_of_url_elements==3 and $url_elements[1]=='offer' and $url_elements[2]=='ownerId'){
+                    
+                    $ownerId = $url_elements[3];
+                    
+                    $data=$db->readOffersForOwner($ownerId);
+                    
+                    $status=200;
+                }
+                else if($number_of_url_elements==5 and $url_elements[1]=='gift' and $url_elements[2]=='ownerId' and $url_elements[4]=='searchTerm'){
+                    
+                    $ownerId = $url_elements[3];
+                    $searchTerm = $url_elements[5];
+                    
+                    $data=$db->readGiftsBySearchTerm($ownerId, $searchTerm);
+                    
+                    $status=200;
+                }
+                else if($number_of_url_elements==5 and $url_elements[1]=='gift' and $url_elements[2]=='ownerId' and $url_elements[4]=='categoryId'){
+                    
+                    $ownerId = $url_elements[3];
+                    $categoryId = $url_elements[5];
+                    
+                    $data=$db->readGiftsForCategory($ownerId, $categoryId);
+                    
+                    $status=200;
+                }
+                break;
+                
+                
+            case 'post':
+				if($number_of_url_elements==1 and $url_elements[1]=='gift'){
+                    
+                    $json = file_get_contents('php://input');
+                    
+                    $gift = deserializeGift($json);
+                    
+                    $createdGift = $db->createGift($gift);
+                    
+                    $data = $createdGift->toJSON();
+                    
+                    $status=201;
+                }
+                else if($number_of_url_elements==1 and $url_elements[1]=='offer'){
+                    
+                    $json = file_get_contents('php://input');
+                    
+                    $offer = deserializeOffer($json);
+                    
+                    $createdOffer = $db->createOffer($offer);
+                    
+                    $data = $createdOffer->toJSON();
+                    
+                    $status=201;
+                }
+                break;
+                
+                
+            case 'put':
+				if($number_of_url_elements==3 and $url_elements[1]=='offer' and $url_elements[2]=='id'){
+                    
+                    $offerId = $url_elements[3];
+                    
+                    $json = file_get_contents('php://input');
+                    
+                    $offer = deserializeOffer($json);
+                    
+                    $updatedOffer = $db->updateOffer($offerId, $offer);
+                    
+                    $data = $updatedOffer->toJSON();
+                    
+                    $status=200;
+                }
+                else if($number_of_url_elements==3 and $url_elements[1]=='user' and $url_elements[2]=='id'){
+                    
+                    $userId = $url_elements[3];
+                    
+                    $json = file_get_contents('php://input');
+                    
+                    $user = deserializeUser($json);
+                    
+                    $updatedUser = $db->updateUser($userId, $user);
+                    
+                    $data = $updatedUser->toJSON();
+                    
+                    $status=200;
                 }
                 
                 break;
-            case 'post':
-                
-				//post requests here
-				
-                break;
 
-            case 'put':
                 
-				//put requests here
-				
-                break;
-
             case 'delete':
-                
-				//delete requests here
+                if($number_of_url_elements==3 and $url_elements[1]=='gift' and $url_elements[2]=='id'){
+                    
+                    $giftId = $url_elements[3];
+                    
+                    $db->deleteGift($giftId);
+                    
+                    $data = "";
+                    
+                    $status=200;
+                }
 				
                 break;
         }
@@ -64,7 +198,7 @@
             $status="500";
 
             $error_description=array(
-                "message"=>$e.message
+                "message"=>$e->getMessage()
             );
 
             $data=json_encode($error_description);

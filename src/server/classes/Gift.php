@@ -2,26 +2,26 @@
 
 class Gift
 {
-    private $id;
-    private $name;
-    private $description;
-    private $image1Path;
-    private $image2Path;
-    private $image3Path;
-	private $active;
-	private $categoryId;
-	private $ownerId;
+    public $id;
+    public $name;
+    public $description;
+    public $image1Path;
+    public $image2Path;
+    public $image3Path;
+	public $active;
+	public $categoryId;
+	public $ownerId;
 
-	public function __construct($id, $name, $description, $image1Path, $image2Path, $image3Path, $active, $categoryId, $ownerId){
-        $this->id = $id;
-        $this->name = $name;
-        $this->description = $description;
-        $this->image1Path = $image1Path;
-        $this->image2Path = $image2Path;
-        $this->image3Path = $image3Path;
-		$this->active = $active;
-        $this->categoryId = $categoryId;
-        $this->ownerId = $ownerId;
+	public function __construct($id , $name, $description, $image1Path, $image2Path, $image3Path, $active, $categoryId, $ownerId){
+            $this->id = $id;
+            $this->name = $name;
+            $this->description = $description;
+            $this->image1Path = $image1Path;
+            $this->image2Path = $image2Path;
+            $this->image3Path = $image3Path;
+            $this->active = $active;
+            $this->categoryId = $categoryId;
+            $this->ownerId = $ownerId;
     }
 	
     public function getName()
@@ -40,14 +40,13 @@ class Gift
             'image1Path' => $this->image1Path,
             'image2Path' => $this->image2Path,
             'image3Path' => $this->image3Path,
-			'active' => $this->active(),
+			'active' => $this->active,
             'categoryId' => $this->categoryId,
             'ownerId' => $this->ownerId
         );
 
         return json_encode($json);
-    }
-
+    }    
 }
 
 ?>
