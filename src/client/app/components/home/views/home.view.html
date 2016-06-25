@@ -1,10 +1,10 @@
-﻿<div class="intro" style="background-image: url(images/bg3.jpg);">
+﻿<div class="intro" style="background-image: url(assets/images/bg3.jpg);">
     <div class="dtable hw100">
         <div class="dtable-cell hw100">
             <div class="container text-center">
-                <h1 class="intro-title animated fadeInDown"> Find Classified Ads </h1>
+                <h1 class="intro-title animated fadeInDown"> Find Your Perfect Gift </h1>
 
-                <p class="sub animateme fittext3 animated fadeIn"> Find local classified ads on bootclassified in Minutes </p>
+                <p class="sub animateme fittext3 animated fadeIn"> Find something beautiful and get it for free </p>
 
                 <div class="row search-row animated fadeInUp">
                     <div class="col-lg-4 col-sm-4 search-col relative locationicon">
@@ -42,65 +42,15 @@
             </div>
 
             <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 f-category">
-                <a href="category.html"><img src="images/category/car-2.jpg" class="img-responsive" alt="img">
-                    <h6> Automobiles </h6></a>
+                <a href="category.html"><img src="assets/images/category/car-2.jpg" class="img-responsive" alt="img">
+                    <h6> Example category </h6>
+                </a>
             </div>
-
-            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 f-category">
-                <a href="category.html"><img src="images/category/laptop-2.jpg" class="img-responsive" alt="img">
-                    <h6> Laptops </h6></a>
-            </div>
-
-            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 f-category">
-                <a href="category.html"><img src="images/category/mobile.jpg" class="img-responsive" alt="img">
-                    <h6> Mobiles </h6></a>
-            </div>
-
-            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 f-category">
-                <a href="category.html"><img src="images/category/tv.jpg" class="img-responsive" alt="img">
-                    <h6>
-                            Electronics </h6></a>
-            </div>
-
-            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 f-category">
-                <a href="category.html"><img src="images/category/hdd.jpg" class="img-responsive" alt="img">
-                    <h6> Computer Accessories </h6></a>
-            </div>
-
-            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 f-category">
-                <a href="category.html"><img src="images/category/house.jpg" class="img-responsive" alt="img">
-                    <h6> Real Estate </h6></a>
-            </div>
-
-            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 f-category">
-                <a href="category.html"><img src="images/category/Home-Electronics-Appliances-2.jpg" class="img-responsive" alt="img">
-                    <h6> Home Appliances </h6></a>
-            </div>
-
-            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 f-category">
-                <a href="category.html"><img src="images/category/camera.jpg" class="img-responsive" alt="img">
-                    <h6> Cameras </h6></a>
-            </div>
-
-            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 f-category">
-                <a href="category.html"><img src="images/category/fashion.jpg" class="img-responsive" alt="img">
-                    <h6> Fashion & Beauty </h6></a>
-            </div>
-
-            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 f-category">
-                <a href="category.html"><img src="images/category/toy.jpg" class="img-responsive" alt="img">
-                    <h6> Kids & Baby Products </h6></a>
-            </div>
-
-            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 f-category">
-                <a href="category.html"><img src="images/category/jobs.jpg" class="img-responsive" alt="img">
-                    <h6> Jobs </h6></a>
-            </div>
-
-            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 f-category">
-                <a href="category.html"><img src="images/category/catalog.jpg" class="img-responsive" alt="img">
-                    <h6> Home & Furniture </h6></a>
-            </div>
+            <div ng-repeat="category in vm.categories" class="col-lg-2 col-md-3 col-sm-3 col-xs-4 f-category">
+                <a ui-sref="#"><img src="{{category.image}}" class="img-responsive" alt="img">
+                    <h6> {{category.Description}} </h6>
+                </a>
+            </div>    
 
         </div>
 
@@ -109,10 +59,10 @@
 
     <div style="clear: both"></div>
 
-    <div class="row">
+    <!--<div class="row">
         <div class="col-sm-9 page-content col-thin-right">
             <div class="inner-box category-content">
-                <h2 class="title-2">Find Classified Ads World Wide </h2>
+                <h2 class="title-2">Find Your Perfect Gift </h2>
 
                 <div class="row">
                     <div class="col-md-4 col-sm-4 ">
@@ -305,82 +255,12 @@
 
             </aside>
         </div>
-    </div>
+    </div>-->
 </div>
-<div class="page-info hasOverly" style="background: url(images/bg.jpg); background-size:cover">
+<div class="page-info hasOverly" style="background: url(assets/images/bg.jpg); background-size:cover">
     <div class="bg-overly ">
         <div class="container text-center section-promo">
-            <div class="row">
-                <div class="col-sm-3 col-xs-6 col-xxs-12">
-                    <div class="iconbox-wrap">
-                        <div class="iconbox">
-                            <div class="iconbox-wrap-icon">
-                                <i class="icon  icon-group"></i>
-                            </div>
-                            <div class="iconbox-wrap-content">
-                                <h5><span>2200</span></h5>
-
-                                <div class="iconbox-wrap-text">Trusted Seller</div>
-                            </div>
-                        </div>
-                        <!-- /..iconbox -->
-                    </div>
-                    <!--/.iconbox-wrap-->
-                </div>
-
-                <div class="col-sm-3 col-xs-6 col-xxs-12">
-                    <div class="iconbox-wrap">
-                        <div class="iconbox">
-                            <div class="iconbox-wrap-icon">
-                                <i class="icon  icon-th-large-1"></i>
-                            </div>
-                            <div class="iconbox-wrap-content">
-                                <h5><span>100</span></h5>
-
-                                <div class="iconbox-wrap-text">Categories</div>
-                            </div>
-                        </div>
-                        <!-- /..iconbox -->
-                    </div>
-                    <!--/.iconbox-wrap-->
-                </div>
-
-                <div class="col-sm-3 col-xs-6  col-xxs-12">
-                    <div class="iconbox-wrap">
-                        <div class="iconbox">
-                            <div class="iconbox-wrap-icon">
-                                <i class="icon  icon-map"></i>
-                            </div>
-                            <div class="iconbox-wrap-content">
-                                <h5><span>700</span></h5>
-
-                                <div class="iconbox-wrap-text">Location</div>
-                            </div>
-                        </div>
-                        <!-- /..iconbox -->
-                    </div>
-                    <!--/.iconbox-wrap-->
-                </div>
-
-                <div class="col-sm-3 col-xs-6 col-xxs-12">
-                    <div class="iconbox-wrap">
-                        <div class="iconbox">
-                            <div class="iconbox-wrap-icon">
-                                <i class="icon icon-facebook"></i>
-                            </div>
-                            <div class="iconbox-wrap-content">
-                                <h5><span>50,000</span></h5>
-
-                                <div class="iconbox-wrap-text"> Facebook Fans</div>
-                            </div>
-                        </div>
-                        <!-- /..iconbox -->
-                    </div>
-                    <!--/.iconbox-wrap-->
-                </div>
-
-            </div>
-
+           
         </div>
     </div>
 </div>

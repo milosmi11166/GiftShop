@@ -12,11 +12,25 @@ angular.module('user').config(['$stateProvider',
                 url: '/login',
                 templateUrl: 'app/components/user/views/login.view.html',
                 controller: 'authenticationController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                resolve: {
+                    store: storeFn
+                }
             }).state('register', {
                 url: '/register',
                 templateUrl: 'app/components/user/views/register.view.html',
                 controller: 'authenticationController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                resolve: {
+                    store: storeFn
+                }
             });
     }]);
+
+function storeFn(authenticationService) {
+    // Get the correct module (API or localStorage).
+    return authenticationService.then(function (module) {
+        module.get();
+        return module;
+    });
+}

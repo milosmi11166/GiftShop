@@ -6,7 +6,8 @@ var AppConfig = (function () {
 
     // Init module configuration options
     var appModuleDependencies = [
-        'ui.router'
+        'ui.router',
+        'ngResource'
     ];
 
     // cgNotify a new vertical module

@@ -61,7 +61,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li><a ui-sref="login">Login</a></li>
                             <li><a ui-sref="register">Signup</a></li>
-                            <li class="postadd"><a class="btn btn-block   btn-border btn-post btn-danger" href="post-ads.html">Post Free Add</a></li>
+                            <li class="postadd"><a ui-sref="gift.new" class="btn btn-block btn-border btn-post btn-danger">Add new gift</a></li>
                         </ul>
                     </div>
                     <!--/.nav-collapse -->
@@ -82,7 +82,7 @@
     </div>
     <!-- /.wrapper -->
 
-    <!-- Le javascript
+    <!-- javascript
 ================================================== -->
 
     <!-- Placed at the end of the document so the pages load faster -->
@@ -90,24 +90,27 @@
 
     <!-- Bower compoments -->
     <script src="assets/libs/angular-ui-router/release/angular-ui-router.js"></script>
-    <!-- End of Bower compoments -->
+    <script src="assets/libs/angular-resource/angular-resource.js"></script>
+    <!-- End of Bower components -->
 
     <!-- Angular setup -->
     <script src="app/config.js"></script>
     <script src="app/app.js"></script>
+    <script src="app/consts.js"></script>
     <!-- End of Angular setup -->
 
     <!-- Angular compoments -->
 
     <!-- Core -->
     <script src="app/shared/core/core.module.js"></script>
+    <script src="app/shared/core/services/category.service.js"></script>
     <script src="app/shared/core/controllers/header.controller.js"></script>
 
     <!-- Home -->
     <script src="app/components/home/home.module.js"></script>
     <script src="app/components/home/config/home.routes.js"></script>
     <script src="app/components/home/controllers/home.controller.js"></script>
-    <script src="app/components/home/services/home.service.js"></script>
+    <!--<script src="app/components/home/services/home.service.js"></script>-->
 
     <!-- User -->
     <script src="app/components/user/user.module.js"></script>
@@ -116,6 +119,11 @@
     <script src="app/components/user/controllers/authentication.controller.js"></script>
     <script src="app/components/user/services/authentication.service.js"></script>
 
+    <!-- Gift -->
+    <script src="app/components/gift/gift.module.js"></script>
+    <script src="app/components/gift/config/gift.routes.js"></script>
+    <script src="app/components/gift/controllers/gift.controller.js"></script>
+    <script src="app/components/gift/services/gift.service.js"></script>
 
     <!-- End of Angular compoments -->
 

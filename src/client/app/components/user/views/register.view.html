@@ -7,7 +7,7 @@
 
                     <div class="row">
                         <div class="col-sm-12">
-                            <form class="form-horizontal">
+                            <form ng-submit="vm.signup();" name="signupForm" class="form-horizontal">
                                 <fieldset>
                                     <div class="form-group required">
                                         <label class="col-md-4 control-label">You are a <sup>*</sup></label>
@@ -33,7 +33,7 @@
                                         <label class="col-md-4 control-label">First Name <sup>*</sup></label>
 
                                         <div class="col-md-6">
-                                            <input name="" placeholder="First Name" class="form-control input-md" required="" type="text">
+                                            <input ng-model="vm.userSignup.firstName" ng-required="true" name="" placeholder="First Name" class="form-control input-md" type="text">
                                         </div>
                                     </div>
 
@@ -42,7 +42,7 @@
                                         <label class="col-md-4 control-label">Last Name <sup>*</sup></label>
 
                                         <div class="col-md-6">
-                                            <input name="textinput" placeholder="Last Name" class="form-control input-md" type="text">
+                                            <input ng-model="vm.userSignup.lastName" ng-required="true" name="textinput" placeholder="Last Name" class="form-control input-md" type="text">
                                         </div>
                                     </div>
 
@@ -51,7 +51,7 @@
                                         <label class="col-md-4 control-label">Phone Number <sup>*</sup></label>
 
                                         <div class="col-md-6">
-                                            <input name="textinput" placeholder="Phone Number" class="form-control input-md" type="text">
+                                            <input ng-model="vm.userSignup.phoneNumber" ng-required="true" name="textinput" placeholder="Phone Number" class="form-control input-md" type="text">
 
                                             <div class="checkbox">
                                                 <label>
@@ -86,12 +86,12 @@
                                         <label class="col-md-4 control-label" for="textarea">About Yourself</label>
 
                                         <div class="col-md-6">
-                                            <textarea class="form-control" id="textarea" name="textarea">About
+                                            <textarea ng-model="vm.userSignup.about" class="form-control" id="textarea" name="textarea">About
                                                     Yourself</textarea>
                                         </div>
                                     </div>
                                     <div class="form-group required">
-                                        <label for="inputEmail3" class="col-md-4 control-label">Email
+                                        <label ng-model="vm.userSignup.email" for="inputEmail3" class="col-md-4 control-label">Email
                                                 <sup>*</sup></label>
 
                                         <div class="col-md-6">
@@ -102,7 +102,7 @@
                                         <label for="inputPassword3" class="col-md-4 control-label">Password </label>
 
                                         <div class="col-md-6">
-                                            <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                                            <input type="password" ng-model="vm.userSignup.password" class="form-control" id="inputPassword3" placeholder="Password">
 
                                             <p class="help-block">At least 5 characters
                                                 <!--Example block-level help text here.-->
@@ -121,7 +121,7 @@
                                                         & Conditions</a> </label>
                                             </div>
                                             <div style="clear:both"></div>
-                                            <a class="btn btn-primary" href="account-home.html">Register</a></div>
+                                            <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
                                     </div>
                                 </fieldset>
                             </form>

@@ -64,6 +64,9 @@
                     
                     $status=200;
                 }
+                else if($number_of_url_elements==1 and $url_elements[1]=='user'){
+                    $status=200;
+                }
                 else if($number_of_url_elements==3 and $url_elements[1]=='user' and $url_elements[2]=='id'){
                     
                     $id = $url_elements[3];
@@ -118,7 +121,16 @@
                 
                 
             case 'post':
-				if($number_of_url_elements==1 and $url_elements[1]=='gift'){
+                //temp register api
+                if($number_of_url_elements==1 and $url_elements[1]=='user'){
+                            
+                            $json = file_get_contents('php://input');
+                            
+                            $data = $json;
+
+                            $status=200;
+                }
+				else if($number_of_url_elements==1 and $url_elements[1]=='gift'){
                     
                     $json = file_get_contents('php://input');
                     
@@ -146,7 +158,16 @@
                 
                 
             case 'put':
-				if($number_of_url_elements==3 and $url_elements[1]=='offer' and $url_elements[2]=='id'){
+                //temp login url
+                if($number_of_url_elements==1 and $url_elements[1]=='user'){
+                        
+                        $json = file_get_contents('php://input');
+                        
+                        $data = $json;
+
+                        $status=200;
+                }
+				else if($number_of_url_elements==3 and $url_elements[1]=='offer' and $url_elements[2]=='id'){
                     
                     $offerId = $url_elements[3];
                     
@@ -206,6 +227,8 @@
     
     header("HTTP/1.1 ".$status);
     header("Content-Type: application/json");
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Method: GET, POST, PUT, DELETE");
     if(isset($data))
         echo $data;
     

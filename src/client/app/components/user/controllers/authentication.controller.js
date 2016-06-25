@@ -4,25 +4,39 @@
         .module('user')
         .controller('authenticationController', authenticationController);
 
-    authenticationController.$inject = ['$scope', 'authenticationService'];
+    authenticationController.$inject = ['$scope', '$state', 'store'];
 
-    function authenticationController($scope, authenticationService) {
+    function authenticationController($scope, $state, store) {
         var vm = this;
         vm.ctrlName = "Authentication controller";
-        vm.user = {
-            username: null,
-            password: null     
-         }
-         vm.login = login;
+        vm.userLogin = {};
+        vm.userSignup = {};
          
+         vm.login = login;
+         vm.signup = signup;
          
         (function activate() {
             console.log('Authentication controller activation.');
         })();
         
+        // 
+        
         function login(){
-            console.log('Login user: ', vm.user);
-            // authenticationService.login(vm.user).then(function(data){
+            console.log('Login user: ', vm.userLogin);
+            store.login(vm.userLogin).then(function(data){
+                $state.go('home');
+            }, function(err){
+                alert(err);
+            });
+        }
+        
+        function signup(){
+            console.log('Login user: ', vm.userSignup);
+            store.insert(vm.userSignup).then(function(data){
+                console.log('user inserted: ', data);
+                $state.go('home');
+            });
+             // authenticationService.signup(vm.userSignup).then(function(data){
                 
             // }, function(error){
                 
