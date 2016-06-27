@@ -6,13 +6,13 @@
 		// hand off the localStorage adapter
 		return $http.get(GLOBAL_SETTINGS.fullApiPath + 'category')
 			.then(function () {
-				return $injector.get('category-api');
+				return $injector.get('categoryApi');
 			}, function () {
-				return $injector.get('category-localStorage');
+				return $injector.get('categoryLocalStorage');
 			});
 	})
 
-	.factory('category-api', function ($resource) {
+	.factory('categoryApi', function ($resource) {
 		'use strict';
 
 		var store = {
@@ -27,7 +27,6 @@
 			get: function () {
 				return store.api.query(function (resp) {
 					angular.copy(resp, store.categories);
-					// return categories;
 				});
 			},
 
@@ -37,7 +36,7 @@
 		return store;
 	})
 
-	.factory('category-localStorage', function ($q) {
+	.factory('categoryLocalStorage', function ($q) {
 		'use strict';
 
 		var STORAGE_ID = 'gift-shop-categories';

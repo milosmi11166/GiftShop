@@ -4,16 +4,20 @@
         .module('core')
         .controller('headerController', headerController);
 
-    headerController.$inject = ['$scope'];
+    headerController.$inject = ['$scope', 'authenticationApi'];
 
-    function headerController($scope) {
+    function headerController($scope, authenticationApi) {
         var vm = this;
         vm.ctrlName = "Header controller";
-        vm.title = "Shop";
-         
+
+        $scope.$on('loginSuccess', function () {
+            vm.currentUser = authenticationApi.currentUser;
+        });
+
         (function activate() {
-            console.log('Header controller activation.');
+            vm.currentUser = authenticationApi.currentUser;
         })();
+
     }
 })();
 

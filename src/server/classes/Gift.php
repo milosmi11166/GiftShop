@@ -12,8 +12,8 @@ class Gift
 	public $categoryId;
 	public $ownerId;
 
-	public function __construct($id , $name, $description, $image1Path, $image2Path, $image3Path, $active, $categoryId, $ownerId){
-            $this->id = $id;
+	public function __construct($name, $description, $image1Path, $image2Path, $image3Path, $active, $categoryId, $ownerId){
+            //$this->id = $id;
             $this->name = $name;
             $this->description = $description;
             $this->image1Path = $image1Path;

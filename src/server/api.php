@@ -14,7 +14,7 @@
     {
         $d = json_decode($json, true);
         
-        return new Gift($d['id'], $d['name'], $d['description'], $d['image1Path'], $d['image2Path'], $d['image3Path'], $d['active'], $d['categoryId'], $d['ownerId']);
+        return new Gift($d['name'], $d['description'], $d['image1Path'], $d['image2Path'], $d['image3Path'], $d['active'], $d['categoryId'], $d['ownerId']);
     }
     
     function deserializeOffer($json)
@@ -58,21 +58,46 @@
 
         switch($method){
             case 'get':
+               
                 if($number_of_url_elements==1 and $url_elements[1]=='category'){
                     
                     $data=$db->readCategories();
                     
                     $status=200;
                 }
+                //test temp
                 else if($number_of_url_elements==1 and $url_elements[1]=='user'){
+                    $id;
+                    foreach($_GET as $key => $value) {
+                        if($key=="id"){
+                            $id = $value;
+                        }
+                    }
+
+                    $data=$db->readUser($id);
+
                     $status=200;
                 }
-                else if($number_of_url_elements==3 and $url_elements[1]=='user' and $url_elements[2]=='id'){
-                    
+                else if($number_of_url_elements==3 and $url_elements[1]=='user' and $url_elements[3]=='id'){
                     $id = $url_elements[3];
-                    
+
                     $data=$db->readUser($id);
                     
+                    $status=200;
+                }
+                else if($number_of_url_elements==1 and $url_elements[1]=='gift'){
+                    $id;
+                    $ownerId;
+                    foreach($_GET as $key => $value) {
+                        if($key=="id"){
+                            $id = $value;
+                            $data=$db->readGift($id);
+                        }else if($key=="ownerId"){
+                            $ownerId = $value;
+                            $data=$db->readGiftsForOwner($ownerId);
+                        }
+                    }
+
                     $status=200;
                 }
                 else if($number_of_url_elements==3 and $url_elements[1]=='gift' and $url_elements[2]=='id'){
@@ -91,9 +116,14 @@
                     
                     $status=200;
                 }
-                else if($number_of_url_elements==3 and $url_elements[1]=='offer' and $url_elements[2]=='ownerId'){
+                else if($number_of_url_elements==1 and $url_elements[1]=='offer'){
                     
-                    $ownerId = $url_elements[3];
+                    $ownerId;
+                    foreach($_GET as $key => $value) {
+                        if($key=="ownerId"){
+                            $ownerId = $value;
+                        }
+                    }
                     
                     $data=$db->readOffersForOwner($ownerId);
                     
@@ -125,19 +155,20 @@
                 if($number_of_url_elements==1 and $url_elements[1]=='user'){
                             
                             $json = file_get_contents('php://input');
-                            
-                            $data = $json;
+                            $user = deserializeUser($json);
+                            $createdUser = $db->createUser($user);
 
-                            $status=200;
+                            $data = $createdUser->toJSON();
+
+                            $status=201;
                 }
 				else if($number_of_url_elements==1 and $url_elements[1]=='gift'){
                     
                     $json = file_get_contents('php://input');
                     
                     $gift = deserializeGift($json);
-                    
                     $createdGift = $db->createGift($gift);
-                    
+
                     $data = $createdGift->toJSON();
                     
                     $status=201;
@@ -159,7 +190,7 @@
                 
             case 'put':
                 //temp login url
-                if($number_of_url_elements==1 and $url_elements[1]=='user'){
+                if($number_of_url_elements==1 and $url_elements[1]=='login'){
                         
                         $json = file_get_contents('php://input');
                         
@@ -190,6 +221,18 @@
                     $user = deserializeUser($json);
                     
                     $updatedUser = $db->updateUser($userId, $user);
+                    
+                    $data = $updatedUser->toJSON();
+                    
+                    $status=200;
+                } 
+                else if($number_of_url_elements==1 and $url_elements[1]=='user'){
+
+                    $json = file_get_contents('php://input');
+                    
+                    $user = deserializeUser($json);
+                    
+                    $updatedUser = $db->updateUser($user->id, $user);
                     
                     $data = $updatedUser->toJSON();
                     

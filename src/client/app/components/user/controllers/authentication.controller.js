@@ -4,9 +4,9 @@
         .module('user')
         .controller('authenticationController', authenticationController);
 
-    authenticationController.$inject = ['$scope', '$state', 'store'];
+    authenticationController.$inject = ['$scope', '$state', 'authStore'];
 
-    function authenticationController($scope, $state, store) {
+    function authenticationController($scope, $state, authStore) {
         var vm = this;
         vm.ctrlName = "Authentication controller";
         vm.userLogin = {};
@@ -23,7 +23,7 @@
         
         function login(){
             console.log('Login user: ', vm.userLogin);
-            store.login(vm.userLogin).then(function(data){
+            authStore.login(vm.userLogin).then(function(data){
                 $state.go('home');
             }, function(err){
                 alert(err);
@@ -32,7 +32,7 @@
         
         function signup(){
             console.log('Login user: ', vm.userSignup);
-            store.insert(vm.userSignup).then(function(data){
+            authStore.insert(vm.userSignup).then(function(data){
                 console.log('user inserted: ', data);
                 $state.go('home');
             });

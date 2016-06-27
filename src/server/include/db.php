@@ -121,8 +121,8 @@
         }
         
         public function createGift($gift){
-            $stmt = self::$connection->prepare("insert into gift values (:id, :name, :description, :image1Path, :image2Path, :image3Path, :active, :categoryId, :ownerId)");
-            $stmt->bindParam(':id', $gift->id, PDO::PARAM_INT);
+            $stmt = self::$connection->prepare("insert into gift values ('', :name, :description, :image1Path, :image2Path, :image3Path, :active, :categoryId, :ownerId)");
+            //$stmt->bindParam(':id', $gift->id, PDO::PARAM_INT);
             $stmt->bindParam(':name', $gift->name, PDO::PARAM_STR);
             $stmt->bindParam(':description', $gift->description, PDO::PARAM_STR);
             $stmt->bindParam(':image1Path', $gift->image1Path, PDO::PARAM_STR);
@@ -137,6 +137,11 @@
                 return $gift;
             else
                 return NULL;
+        }
+
+        public function createUser($user){
+            $stmt = self::$connection->prepare("insert into user values ()");
+            //TODO:    
         }
         
         public function createOffer($offer){

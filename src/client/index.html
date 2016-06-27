@@ -54,14 +54,28 @@
                         <a href="index.html" class="navbar-brand logo logo-title">
                             <!-- Original Logo will be placed here  -->
                             <span class="logo-icon"><i class="icon icon-search-1 ln-shadow-logo shape-0"></i> </span> GIFT
-                            <span>{{vm.title}}</span> </a>
+                            <span>Shop</span> </a>
                     </div>
                     <div class="navbar-collapse collapse">
 
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a ui-sref="login">Login</a></li>
-                            <li><a ui-sref="register">Signup</a></li>
-                            <li class="postadd"><a ui-sref="gift.new" class="btn btn-block btn-border btn-post btn-danger">Add new gift</a></li>
+                            <li ng-hide="vm.currentUser.id"><a ui-sref="login">Login</a></li>
+                            <li ng-hide="vm.currentUser.id"><a ui-sref="register">Signup</a></li>
+
+                            <li ng-show="vm.currentUser.id"><a href="#">Signout <i class="glyphicon glyphicon-off"></i> </a></li>
+                            <li ng-show="vm.currentUser.id" class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <span>{{vm.currentUser.username}}</span> <i class="icon-user fa"></i> <i class=" icon-down-open-big fa"></i></a>
+                                <ul class="dropdown-menu user-menu">
+                                    <li class="active"><a ui-sref="user.profile"><i class="icon-home"></i> Personal Home
+                                    </a></li>
+
+                                    <li><a ui-sref="user.myGifts"><i class="icon-th-thumb"></i> My gifts </a></li>
+                                    <li><a ui-sref="user.myOffers"><i class="icon-heart"></i> My offers </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li ng-show="vm.currentUser.id" class="postadd"><a ui-sref="newGift" class="btn btn-block btn-border btn-post btn-danger">Add new gift</a></li>
                         </ul>
                     </div>
                     <!--/.nav-collapse -->
@@ -71,14 +85,14 @@
         </div>
         <!-- /.header -->
 
-       
+
 
         <div class="main-container" ui-view>
 
         </div>
         <!-- /.main-container -->
 
-       
+
     </div>
     <!-- /.wrapper -->
 
@@ -118,6 +132,7 @@
     <script src="app/components/user/controllers/user.controller.js"></script>
     <script src="app/components/user/controllers/authentication.controller.js"></script>
     <script src="app/components/user/services/authentication.service.js"></script>
+    <script src="app/components/user/services/user.service.js"></script>
 
     <!-- Gift -->
     <script src="app/components/gift/gift.module.js"></script>

@@ -7,29 +7,31 @@ angular.module('user')
         // hand off the localStorage adapter
         return $http.get(GLOBAL_SETTINGS.fullApiPath + 'user')
             .then(function () {
-                return $injector.get('authentication-api');
+                return $injector.get('authenticationApi');
             }, function () {
-                return $injector.get('authentication-localStorage');
+                return $injector.get('authenticationApi');
+                //return $injector.get('authenticationLocalStorage');
             });
     })
 
-    .factory('authentication-api', function ($resource) {
+    .factory('authenticationApi', ['$resource', '$rootScope', function ($resource, $rootScope) {
         'use strict';
-
+        var currentUser;
         var store = {
+            currentUser: currentUser,
             users: [],
 
-            api: $resource(GLOBAL_SETTINGS.apiPath + 'user/:id', null,
+            api: $resource(GLOBAL_SETTINGS.apiPath + 'login/:id', null,
                 {
                     update: { method: 'PUT' }
                 }
             ),
 
-            get: function () {
-                return store.api.query(function (resp) {
-                    angular.copy(resp, store.users);
-                });
-            },
+            // get: function () {
+            //     return store.api.query(function (resp) {
+            //         angular.copy(resp, store.users);
+            //     });
+            // },
 
             insert: function (user) {
                 var originalUsers = store.users.slice(0);
@@ -45,9 +47,13 @@ angular.module('user')
 
 
             login: function (user) {
+                store.currentUser = user;
+                store.currentUser.id = 1;
+
                 return store.api.update(user,
                     function success(resp) {
                        console.log('Login Success', resp);
+                       $rootScope.$broadcast('loginSuccess');
                     }, function error(err) {
                        console.log('Login Error', err);                        
                     }).$promise;
@@ -56,9 +62,9 @@ angular.module('user')
         };
 
         return store;
-    })
+    }])
 
-    .factory('authentication-localStorage', function ($q) {
+    .factory('authenticationLocalStorage', function ($q) {
         'use strict';
 
         var STORAGE_ID = 'gift-shop-users';
