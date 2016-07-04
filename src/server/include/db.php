@@ -27,7 +27,6 @@
         
         public function readUser($id){
             
-            
             $query = "select * from user where id = :idUser";
             
             $stmt = self::$connection->prepare($query);
@@ -37,8 +36,31 @@
             $stmt->execute();
             
             $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+            if(count($result) == 1){
+                return json_encode($result[0]);
+            }else{
+                return NULL;
+            }
+        }
+
+        public function readUserLogin($email, $password){
             
-            return json_encode($result);
+            $query = "select * from user where email = :email and password = :password";
+            
+            $stmt = self::$connection->prepare($query);
+            
+            $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+            $stmt->bindParam(":password", $password, PDO::PARAM_STR);
+            
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+            
+            if(count($result) == 1){
+                return json_encode($result[0]);
+            }else{
+                return NULL;
+            }
         }
         
         public function readGift($id){
@@ -51,14 +73,14 @@
             
             $stmt->execute();
             
-            $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+            $result = $stmt->fetchAll(PDO::FETCH_OBJ)[0];
             
             return json_encode($result);
         }
         
         public function readGiftsForOwner($ownerId){
             
-            $query = "select * from gift where ownerid=:ownerId";
+            $query = "select * from gift where ownerid=:ownerId and active = 1";
             
             $stmt = self::$connection->prepare($query);
             
@@ -71,7 +93,7 @@
             return json_encode($result);
         }
         
-        public function readOffersForOwner($ownerId){
+        public function readOffersForOwner($ownerId) {
             
             $query = "select * from offer where ownerid=:ownerId";
             
@@ -121,7 +143,7 @@
         }
         
         public function createGift($gift){
-            $stmt = self::$connection->prepare("insert into gift values ('', :name, :description, :image1Path, :image2Path, :image3Path, :active, :categoryId, :ownerId)");
+            $stmt = self::$connection->prepare("insert into gift values (null, :name, :description, :image1Path, :image2Path, :image3Path, :active, :categoryId, :ownerId)");
             //$stmt->bindParam(':id', $gift->id, PDO::PARAM_INT);
             $stmt->bindParam(':name', $gift->name, PDO::PARAM_STR);
             $stmt->bindParam(':description', $gift->description, PDO::PARAM_STR);
@@ -140,8 +162,23 @@
         }
 
         public function createUser($user){
-            $stmt = self::$connection->prepare("insert into user values ()");
-            //TODO:    
+            $stmt = self::$connection->prepare("insert into user values (null, :email, :password, :fullName, :address, :phone, DEFAULT, :userTypeId)");
+
+            $stmt->bindParam(':email', $user->email, PDO::PARAM_STR);
+            $stmt->bindParam(':password', $user->password, PDO::PARAM_STR);
+            $stmt->bindParam(':fullName', $user->fullName, PDO::PARAM_STR);
+            $stmt->bindParam(':address', $user->address, PDO::PARAM_STR);
+            $stmt->bindParam(':phone', $user->phone, PDO::PARAM_STR);
+            // $stmt->bindParam(':created', $user->created, PDO::PARAM_INT);
+            $stmt->bindParam(':userTypeId', $user->userTypeId, PDO::PARAM_INT);
+            $stmt->execute();
+
+             if ($stmt->rowCount() == 1){
+                $user->id = self::$connection->lastInsertId();
+                return $user;
+             }
+            else
+                return NULL;  
         }
         
         public function createOffer($offer){

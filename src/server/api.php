@@ -65,39 +65,11 @@
                     
                     $status=200;
                 }
-                //test temp
-                else if($number_of_url_elements==1 and $url_elements[1]=='user'){
-                    $id;
-                    foreach($_GET as $key => $value) {
-                        if($key=="id"){
-                            $id = $value;
-                        }
-                    }
-
-                    $data=$db->readUser($id);
-
-                    $status=200;
-                }
-                else if($number_of_url_elements==3 and $url_elements[1]=='user' and $url_elements[3]=='id'){
+                else if($number_of_url_elements==3 and $url_elements[1]=='user' and $url_elements[2]=='id'){
                     $id = $url_elements[3];
 
                     $data=$db->readUser($id);
                     
-                    $status=200;
-                }
-                else if($number_of_url_elements==1 and $url_elements[1]=='gift'){
-                    $id;
-                    $ownerId;
-                    foreach($_GET as $key => $value) {
-                        if($key=="id"){
-                            $id = $value;
-                            $data=$db->readGift($id);
-                        }else if($key=="ownerId"){
-                            $ownerId = $value;
-                            $data=$db->readGiftsForOwner($ownerId);
-                        }
-                    }
-
                     $status=200;
                 }
                 else if($number_of_url_elements==3 and $url_elements[1]=='gift' and $url_elements[2]=='id'){
@@ -116,14 +88,9 @@
                     
                     $status=200;
                 }
-                else if($number_of_url_elements==1 and $url_elements[1]=='offer'){
+                else if($number_of_url_elements==3 and $url_elements[1]=='offer' and $url_elements[2]=='ownerId'){
                     
-                    $ownerId;
-                    foreach($_GET as $key => $value) {
-                        if($key=="ownerId"){
-                            $ownerId = $value;
-                        }
-                    }
+                    $ownerId = $url_elements[3];
                     
                     $data=$db->readOffersForOwner($ownerId);
                     
@@ -151,8 +118,7 @@
                 
                 
             case 'post':
-                //temp register api
-                if($number_of_url_elements==1 and $url_elements[1]=='user'){
+                if($number_of_url_elements==2 and $url_elements[1]=='user' and $url_elements[2]=='register'){
                             
                             $json = file_get_contents('php://input');
                             $user = deserializeUser($json);
@@ -161,6 +127,18 @@
                             $data = $createdUser->toJSON();
 
                             $status=201;
+                }
+                else if($number_of_url_elements==2 and $url_elements[1]=='user' and $url_elements[2]=='login'){
+                            
+                            $json = file_get_contents('php://input');
+                            $d = json_decode($json, true);
+                            $data=$db->readUserLogin($d['username'], $d['password']);  
+                                 
+                            if($data != NULL){
+                                $status=200;
+                            } else{
+                                $status=404; 
+                            }
                 }
 				else if($number_of_url_elements==1 and $url_elements[1]=='gift'){
                     
@@ -189,16 +167,7 @@
                 
                 
             case 'put':
-                //temp login url
-                if($number_of_url_elements==1 and $url_elements[1]=='login'){
-                        
-                        $json = file_get_contents('php://input');
-                        
-                        $data = $json;
-
-                        $status=200;
-                }
-				else if($number_of_url_elements==3 and $url_elements[1]=='offer' and $url_elements[2]=='id'){
+                if($number_of_url_elements==3 and $url_elements[1]=='offer' and $url_elements[2]=='id'){
                     
                     $offerId = $url_elements[3];
                     

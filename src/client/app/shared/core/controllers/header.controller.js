@@ -4,19 +4,31 @@
         .module('core')
         .controller('headerController', headerController);
 
-    headerController.$inject = ['$scope', 'authenticationApi'];
+    headerController.$inject = ['$scope', '$state', 'authenticationService'];
 
-    function headerController($scope, authenticationApi) {
+    function headerController($scope, $state, authenticationService) {
         var vm = this;
+        var STORAGE_ID = 'current-user'
         vm.ctrlName = "Header controller";
 
-        $scope.$on('loginSuccess', function () {
-            vm.currentUser = authenticationApi.currentUser;
+        (function activate() {
+            var currentUser = JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
+            vm.currentUser = currentUser; 
+            authenticationService.currentUser = currentUser;
+            vm.logout = logout;
+        })();
+
+        $scope.$on('authenticationService:loginSuccess', function (event, user) {
+            vm.currentUser = user;
+            localStorage.setItem(STORAGE_ID, JSON.stringify(user));
         });
 
-        (function activate() {
-            vm.currentUser = authenticationApi.currentUser;
-        })();
+        function logout() {
+            vm.currentUser = null;
+            authenticationService.currentUser = null;
+            localStorage.removeItem(STORAGE_ID);
+            $state.go('home');
+        }
 
     }
 })();

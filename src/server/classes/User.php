@@ -21,10 +21,9 @@ class User
 		$this->created = $created;
         $this->userTypeId = $userTypeId;
     }
-	
-	//TODO: geteri i seteri za sve propertije 
-	
-	
+	//TODO: geteri i seteri za sve propertije
+    
+    	
     public function toJSON(){
         $json = array(
             'id' => $this->id,

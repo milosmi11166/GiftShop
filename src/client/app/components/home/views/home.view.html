@@ -7,17 +7,17 @@
                 <p class="sub animateme fittext3 animated fadeIn"> Find something beautiful and get it for free </p>
 
                 <div class="row search-row animated fadeInUp">
-                    <div class="col-lg-4 col-sm-4 search-col relative locationicon">
+                    <div class="col-lg-8 col-sm-8 search-col relative locationicon">
                         <i class="icon-docs icon-append"></i>
-                        <input type="text" name="country" id="autocomplete-ajax" class="form-control locinput input-rel searchtag-input has-icon"
-                            placeholder="Gift name" value="">
+                        <input ng-model="vm.keyword" type="text" name="country" id="autocomplete-ajax" class="form-control locinput input-rel searchtag-input has-icon"
+                            placeholder="Keyword" value="">
 
                     </div>
-                    <div class="col-lg-4 col-sm-4 search-col relative"><i class="icon-docs icon-append"></i>
+                    <!--<div class="col-lg-4 col-sm-4 search-col relative"><i class="icon-docs icon-append"></i>
                         <input type="text" name="ads" class="form-control has-icon" placeholder="Category" value="">
-                    </div>
+                    </div>-->
                     <div class="col-lg-4 col-sm-4 search-col">
-                        <button class="btn btn-primary btn-search btn-block"><i
+                        <button ng-click="vm.doSearch(vm.keyword);" class="btn btn-primary btn-search btn-block"><i
                                     class="icon-search"></i><strong>Find</strong></button>
                     </div>
                 </div>
@@ -40,13 +40,33 @@
                 </div>
             </div>
 
-            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 f-category">
-                <a href="category.html"><img src="assets/images/category/car-2.jpg" class="img-responsive" alt="img">
-                    <h6> Example category </h6>
+            <!--<div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 f-category">
+                <a ui-sref="category.html"><img src="assets/images/category/jobs.jpg" class="img-responsive" alt="img">
+                    <h6> Odeca </h6>
                 </a>
             </div>
+            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 f-category">
+                <a href="category.html"><img src="assets/images/category/mobile.jpg" class="img-responsive" alt="img">
+                    <h6> Mobilni telefoni </h6>
+                </a>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 f-category">
+                <a href="category.html"><img src="assets/images/category/toy.jpg" class="img-responsive" alt="img">
+                    <h6> Igracke </h6>
+                </a>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 f-category">
+                <a href="category.html"><img src="assets/images/category/laptop-2.jpg" class="img-responsive" alt="img">
+                    <h6> Racunari </h6>
+                </a>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 f-category">
+                <a href="category.html"><img src="assets/images/category/catalog.jpg" class="img-responsive" alt="img">
+                    <h6> Namestaj </h6>
+                </a>
+            </div>-->
             <div ng-repeat="category in vm.categories" class="col-lg-2 col-md-3 col-sm-3 col-xs-4 f-category">
-                <a ui-sref="#"><img src="{{category.image}}" class="img-responsive" alt="img">
+                <a ui-sref="searchGift({categoryId: category.Id})"><img src="{{category.Image}}" class="img-responsive" alt="img">
                     <h6> {{category.Description}} </h6>
                 </a>
             </div>

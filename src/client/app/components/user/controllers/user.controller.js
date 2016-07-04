@@ -8,7 +8,6 @@
 
     function userController($scope) {
         var vm = this;
-        vm.ctrlName = "User controller";
 
         (function activate() {
             console.log('User controller activation.');
@@ -23,19 +22,21 @@
         .module('user')
         .controller('user.profileController', userProfileController);
 
-    userProfileController.$inject = ['$scope', 'userStore', 'authenticationApi'];
+    userProfileController.$inject = ['$scope', 'userStore', 'authenticationService'];
 
-    function userProfileController($scope, userStore, authenticationApi) {
+    function userProfileController($scope, userStore, authenticationService) {
         $scope.model = {
             currentUser: null
         };
 
         (function activate() {
-            $scope.model.currentUser = authenticationApi.currentUser;
+            $scope.model.currentUser = authenticationService.currentUser;
             $scope.sharedData.activeTab = 'profile';
             //
-            userStore.get($scope.model.currentUser.id);
-            $scope.model.user = userStore.user;
+            userStore.get($scope.model.currentUser.id, function (resp) {
+                $scope.model.user = resp;
+                CONSTS.propsToLower($scope.model.user);
+            });
             //
             $scope.model.updateUser = updateUser;
         })();
@@ -56,25 +57,38 @@
         .module('user')
         .controller('user.myGiftsController', myGiftsController);
 
-    myGiftsController.$inject = ['$scope', 'giftStore', 'authenticationApi'];
+    myGiftsController.$inject = ['$scope', 'giftStore', 'authenticationService', 'growl'];
 
-    function myGiftsController($scope, giftStore, authenticationApi) {
+    function myGiftsController($scope, giftStore, authenticationService, growl) {
         var currentUser = null;
         $scope.model = {};
 
         (function activate() {
-            currentUser = authenticationApi.currentUser;
+            currentUser = authenticationService.currentUser;
             $scope.sharedData.activeTab = 'myGifts';
 
-            giftStore.get(null, currentUser.id);
-            $scope.model.myGifts = giftStore.myGifts;
+            giftStore.getByOwner(currentUser.id, function (resp) {
+                $scope.model.myGifts = resp;
+            });
             //
             $scope.model.togleSelection = togleSelection;
+            $scope.model.removeGift = removeGift;
         })();
 
         function togleSelection() {
             $scope.model.myGifts.forEach(function (item) {
                 item.selected = !item.selected;
+            });
+        }
+
+        function removeGift(gift) {
+            giftStore.remove(gift.Id).then(function (resp) {
+                $scope.model.myGifts = $scope.model.myGifts.filter(function (item) {
+                    return item.Id !== gift.Id;
+                });
+                growl.success('Gift successfully deleted.');
+            }, function (err) {
+                growl.error('Error deleting gift');
             });
         }
     }
@@ -86,14 +100,14 @@
         .module('user')
         .controller('user.myOffersController', myOffersController);
 
-    myOffersController.$inject = ['$scope', 'giftStore', 'authenticationApi'];
+    myOffersController.$inject = ['$scope', 'giftStore', 'authenticationService'];
 
-    function myOffersController($scope, giftStore, authenticationApi) {
+    function myOffersController($scope, giftStore, authenticationService) {
         var currentUser = null;
         $scope.model = {};
 
         (function activate() {
-            currentUser = authenticationApi.currentUser;
+            currentUser = authenticationService.currentUser;
             $scope.sharedData.activeTab = 'myOffers';
             //
             giftStore.getOffers(currentUser.id);

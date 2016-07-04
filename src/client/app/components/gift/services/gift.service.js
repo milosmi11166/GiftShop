@@ -11,11 +11,12 @@ angular.module('gift')
             .then(function () {
                 return $injector.get('gift-api');
             }, function () {
-                return $injector.get('gift-localStorage');
+                return $injector.get('gift-api');
+                //                return $injector.get('gift-localStorage');
             });
     })
 
-    .factory('gift-api', function ($resource) {
+    .factory('gift-api', function ($resource, authenticationService) {
         'use strict';
 
         var store = {
@@ -24,28 +25,39 @@ angular.module('gift')
             myOffers: [],
             currentGift: {},
 
-            api: $resource(GLOBAL_SETTINGS.apiPath + 'gift?ownerId=:ownerId', null,
+            api: $resource(GLOBAL_SETTINGS.apiPath + 'gift', null,
                 {
                     update: { method: 'PUT' }
                 }
             ),
 
             get: function (id, ownerId) {
-                if (id) {
-                    return $resource(GLOBAL_SETTINGS.apiPath + 'gift?id=:id', { id: id }, null);
-                } else if (ownerId) {
-                    return store.api.query({ ownerId: ownerId }, function (resp) {
-                        angular.copy(resp, store.myGifts);
-                    });
-                } else {
-                    return store.api.query(function (resp) {
-                        angular.copy(resp, store.gifts);
-                    });
-                }
+                return store.api.query(function (resp) {
+                    angular.copy(resp, store.gifts);
+                });
+            },
+
+            getByOwner: function (ownerId, cb) {
+                return $resource(GLOBAL_SETTINGS.apiPath + 'gift/ownerId/:ownerId', { ownerId: ownerId }, null)
+                    .query(cb);
+            },
+
+            getById: function (giftId, cb) {
+                return $resource(GLOBAL_SETTINGS.apiPath + 'gift/id/:giftId', { giftId: giftId }, null)
+                    .get(cb);
+            },
+
+            getByCategory: function (ownerId, categoryId, cb) {
+                return $resource(GLOBAL_SETTINGS.apiPath + 'gift/ownerId/:ownerId/categoryId/:categoryId', { ownerId: ownerId, categoryId: categoryId }, null)
+                    .query(cb);
+            },
+            getByKeyword: function (ownerId, keyword, cb) {
+                return $resource(GLOBAL_SETTINGS.apiPath + 'gift/ownerId/:ownerId/searchTerm/:keyword', { ownerId: ownerId, keyword: keyword }, null)
+                    .query(cb);
             },
 
             getOffers: function (ownerId) {
-                return $resource(GLOBAL_SETTINGS.apiPath + 'offer?ownerId=:ownerId', { ownerId: ownerId }, null)
+                return $resource(GLOBAL_SETTINGS.apiPath + 'offer/ownerId/:ownerId', { ownerId: ownerId }, null)
                     .query(function (resp) {
                         angular.copy(resp, store.myOffers);
                     });
@@ -53,10 +65,10 @@ angular.module('gift')
 
             insert: function (gift) {
                 //temp
-                gift.ownerId = 1;
-                gift.image1Path = '';
-                gift.image2Path = '';
-                gift.image3Path = '';
+                gift.image1Path = null;
+                gift.image2Path = null;
+                gift.image3Path = null;
+                gift.ownerId = authenticationService.currentUser.Id;
                 return store.api.save(gift,
                     function success(resp) {
                         store.gifts.push(gift);
@@ -74,6 +86,15 @@ angular.module('gift')
                     }).$promise;
             },
 
+            remove: function (giftId) {
+                return $resource(GLOBAL_SETTINGS.apiPath + 'gift/id/:giftId', null, null)
+                    .remove({ giftId: giftId },
+                    function success(resp) {
+
+                    }, function error(err) {
+
+                    }).$promise;
+            }
         };
 
         return store;

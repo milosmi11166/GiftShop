@@ -4,17 +4,27 @@
         .module('home')
         .controller('homeController', homeController);
 
-    homeController.$inject = ['$scope', 'categoryStore'];
+    homeController.$inject = ['$scope', '$state', 'categoryStore'];
 
-    function homeController($scope, categoryStore) {
+    function homeController($scope, $state, categoryStore) {
         var vm = this;
         vm.ctrlName = "Home controller";
         vm.categories = [];
-        
+        // vm.keyword = '';
+
         (function activate() {
-            console.log('Home controller activated.');
-            vm.categories = categoryStore.categories;
+            categoryStore.get(function (resp) {
+                vm.categories = resp;
+            });
+
+
+            vm.doSearch = doSearch;
         })();
+
+
+        function doSearch(keyword) {
+            $state.go('searchGift', { keyword: keyword });
+        };
     }
 })();
 

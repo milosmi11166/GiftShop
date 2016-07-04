@@ -25,21 +25,9 @@ angular.module('user')
                 }
             ),
 
-            get: function (userId) {
-                return store.api.query({ id: userId }, function (resp) {
-                    if (resp.length === 1) {
-                        angular.copy(resp[0], store.user);
-                        
-                        //temp
-                        store.user.email = store.user.Email;
-                        store.user.fullName = store.user.FullName;
-                        store.user.phone = store.user.Phone;
-                        store.user.address = store.user.Address;
-                        store.user.created = store.user.Created;
-                        store.user.userTypeId = 1;
-                        store.user.password = store.user.Password;
-                    }
-                });
+            get: function (userId, cb) {
+                return $resource(GLOBAL_SETTINGS.apiPath + 'user/id/:id', null, null)
+                    .get({ id: userId }, cb);
             },
             update: function (user) {
                 return store.api.update(user,

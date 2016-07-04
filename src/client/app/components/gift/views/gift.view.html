@@ -1,0 +1,120 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 page-content">
+            <div class="inner-box category-content">
+                <h2 ng-show="!vm.gift.id" class="title-2 uppercase"><strong> <i class="icon-docs"></i> Add new gift</strong></h2>
+                <h2 ng-show="vm.gift.id" class="title-2 uppercase"><strong> <i class="icon-docs"></i> Update {{vm.gift.name}}</strong></h2>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <form class="form-horizontal">
+                            <fieldset>
+                                <!-- Select Basic -->
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Category</label>
+
+                                    <div class="col-md-8">
+                                        <select ng-model="vm.gift.categoryId" name="category-group" id="category-group" class="form-control" placeholder="Please Select">
+                                                    <option ng-repeat="category in vm.categories" 
+                                                    value="{{category.Id}}">
+                                                    {{category.Description}}
+                                                    </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- Multiple Radios (inline) -->
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Active</label>
+
+                                    <div class="col-md-8">
+                                        <label class="radio-inline" for="radios-0">
+                                                    <input ng-model="vm.gift.active"
+                                                           name="radios" 
+                                                           id="radios-0" 
+                                                           ng-value="true" 
+                                                           type="radio">
+                                                    Active </label>
+                                        <label class="radio-inline" for="radios-1">
+                                                    <input ng-model="vm.gift.active"
+                                                           name="radios" 
+                                                           id="radios-1" 
+                                                           ng-value="false" 
+                                                           type="radio">
+                                                    Inactive </label>
+                                    </div>
+                                </div>
+
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="Adtitle">Gift name</label>
+
+                                    <div class="col-md-8">
+                                        <input ng-model="vm.gift.name" id="Gifttitle" name="Gifttitle" placeholder="Gift title" class="form-control input-md" required=""
+                                            type="text">
+                                        <span class="help-block">A great title needs at least 10 characters. </span>
+                                    </div>
+                                </div>
+
+                                <!-- Textarea -->
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="textarea">Describe gift </label>
+
+                                    <div class="col-md-8">
+                                        <textarea ng-model="vm.gift.description" class="form-control" id="textarea" name="textarea">Describe
+                                                    what makes your gift special</textarea>
+                                    </div>
+                                </div>
+
+
+                                <!-- photo -->
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="textarea"> Image </label>
+
+                                    <div class="col-md-8">
+                                        <div class="mb10">
+                                            <input ng-model="vm.gift.image" id="input-upload-img1" type="file" class="file" data-preview-file-type="text">
+                                        </div>
+                                        <div class="mb10">
+                                            <input id="input-upload-img2" type="file" class="file" data-preview-file-type="text">
+                                        </div>
+                                        <div class="mb10">
+                                            <input id="input-upload-img3" type="file" class="file" data-preview-file-type="text">
+                                        </div>
+                                        <p class="help-block">Add up to 5 photos. Use a real image of your gift, not catalogs.</p>
+                                    </div>
+                                </div>
+
+                                <!-- terms -->
+                                <div ng-hide="vm.gift.id" class="form-group">
+                                    <label class="col-md-3 control-label">Terms</label>
+
+                                    <div class="col-md-8">
+                                        <label class="checkbox-inline" for="checkboxes-0">
+                                                    <input ng-model="vm.accepted" name="checkboxes" id="checkboxes-0"
+                                                           value="Remember above contact information." type="checkbox">
+                                                    Accept terms and conditions </label>
+                                    </div>
+                                </div>
+
+                                <!-- Button  -->
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label"></label>
+
+                                    <div ng-show="!vm.gift.id" class="col-md-8"><button ng-click="vm.addGift()" ng-disabled="!vm.accepted" 
+                                            id="button1id" class="btn btn-success btn-lg">Add Gift</button></div>
+
+                                    <div ng-show="vm.gift.id" class="col-md-8"><button ng-click="vm.updateGift()" 
+                                            id="button1id" class="btn btn-success btn-lg">Update Gift</button>
+                                        <span ng-show="vm.updated">Gift succesfully updated</span></div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.page-content -->
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /.container -->

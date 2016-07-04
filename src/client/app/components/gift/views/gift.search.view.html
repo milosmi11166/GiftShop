@@ -1,0 +1,128 @@
+<div class="search-row-wrapper">
+    <div class="container text-center" style="padding: 0;">
+        <div class="col-sm-4">
+            <input ng-model="vm.keyword" class="form-control keyword" type="text" placeholder="Keyword">
+        </div>
+        <div class="col-sm-4">
+            <select ng-model="vm.categoryId" name="category" id="search-category" class="form-control" placeholder="Please Select">
+                                                    <option ng-repeat="category in vm.categories" 
+                                                    value="{{category.Id}}">
+                                                    {{category.Description}}
+                                                    </option>
+                                        </select>
+
+        </div>
+        <div class="col-sm-4">
+            <button ng-click="vm.doSearch(vm.currentUser.id, vm.categoryId, vm.keyword);" class="btn btn-block btn-primary  "><i class="fa fa-search"></i></button>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <!-- this (.mobile-filter-sidebar) part will be position fixed in mobile version -->
+        <div class="col-sm-3 page-sidebar mobile-filter-sidebar">
+            <aside>
+                <div class="inner-box">
+                    <div class="categories-list  list-filter">
+                        <h5 class="list-title"><strong><a href="">All Categories</a></strong></h5>
+                        <ul class=" list-unstyled">
+                            <li ng-repeat="category in vm.categories">
+                                <a ui-sref="searchGift({categoryId: category.Id})">
+                                    <span class="title">{{category.Description}}
+                                    </span>
+                                    <span class="count">
+                                            {{category.Description.length}}
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--/.categories-list-->
+                    <div style="clear:both"></div>
+                </div>
+
+                <!--/.categories-list-->
+            </aside>
+        </div>
+        <!--/.page-side-bar-->
+        <div class="col-sm-9 page-content col-thin-left">
+
+            <div class="category-list">
+                <div class="tab-box ">
+
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs add-tabs" role="tablist">
+                        <li class="active"><a href="#allAds" role="tab" data-toggle="tab">Gifts <span
+                                        class="badge">22</span></a></li>
+                    </ul>
+                    <div class="tab-filter">
+                        <!--<select class="selectpicker" data-style="btn-select" data-width="auto">
+                                    <option>Short by</option>
+                                    <option>Price: Low to High</option>
+                                    <option>Price: High to Low</option>
+                                </select>-->
+                    </div>
+                </div>
+                <!--/.tab-box-->
+
+                <!-- Mobile Filter bar-->
+                <div class="mobile-filter-bar col-lg-12  ">
+                    <ul class="list-unstyled list-inline no-margin no-padding">
+                        <li class="filter-toggle">
+                            <a class="">
+                                <i class="  icon-th-list"></i> Filters
+                            </a>
+                        </li>
+                        <li>
+
+
+                            <div class="dropdown">
+                                <a data-toggle="dropdown" class="dropdown-toggle"><i class="caret "></i> Short
+                                            by </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="" rel="nofollow">Relevance</a></li>
+                                    <li><a href="" rel="nofollow">Date</a></li>
+                                    <li><a href="" rel="nofollow">Company</a></li>
+                                </ul>
+                            </div>
+
+                        </li>
+                    </ul>
+                </div>
+                <div class="menu-overly-mask"></div>
+                <!-- Mobile Filter bar End-->
+
+
+                <div class="adds-wrapper">
+                    <div ng-repeat="gift in vm.searchResults" class="item-list">
+                        <div class="col-sm-2 no-padding photobox">
+                            <div class="add-image"><span class="photo-count"><i
+                                            class="fa fa-camera"></i> 2 </span>
+                                <a href=""><img class="thumbnail no-margin" src="{{gift.Image1Path}}" alt="img"></a>
+                            </div>
+                        </div>
+                        <div class="col-sm-7 add-desc-box">
+                            <div class="add-details">
+                                <h5 class="add-title"><a ui-sref="gift({giftId: gift.Id})">
+                                            {{gift.Name}} </a></h5>
+                                <span class="info-row"> 
+                                    <span class="category">{{gift.Description}} </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 text-right  price-box">
+                            <h2 class="item-price"> </h2>
+                            <a class="btn btn-danger  btn-sm make-favorite"> <i class="fa fa-certificate"></i>
+                                <span>Offer</span> </a>
+                            <a class="btn btn-default  btn-sm make-favorite"> <i class="fa fa-heart"></i> <span>Save</span> </a>
+                        </div>
+                    </div>
+                </div>
+                <!--/.adds-wrapper-->
+            </div>
+
+        </div>
+        <!--/.page-content-->
+
+    </div>
+</div>

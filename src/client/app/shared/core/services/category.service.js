@@ -24,10 +24,8 @@
 				}
 			),
 
-			get: function () {
-				return store.api.query(function (resp) {
-					angular.copy(resp, store.categories);
-				});
+			get: function (cb) {
+				return store.api.query(cb);
 			},
 
 			

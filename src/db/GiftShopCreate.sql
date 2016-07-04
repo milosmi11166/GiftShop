@@ -38,13 +38,13 @@ ENGINE = InnoDB;
 -- Table `GiftShop`.`User`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `GiftShop`.`User` (
-  `Id` INT NOT NULL,
+  `Id` INT NOT NULL AUTO_INCREMENT,
   `Email` VARCHAR(50) NOT NULL,
   `Password` VARCHAR(500) NOT NULL,
   `FullName` VARCHAR(50) NULL,
   `Address` VARCHAR(60) NULL,
   `Phone` VARCHAR(15) NULL,
-  `Created` DATETIME NOT NULL,
+  `Created` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `UserTypeId` INT NOT NULL,
   PRIMARY KEY (`Id`),
   INDEX `fk_User_UserType_idx` (`UserTypeId` ASC),
@@ -60,7 +60,7 @@ ENGINE = InnoDB;
 -- Table `GiftShop`.`Gift`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `GiftShop`.`Gift` (
-  `Id` INT NOT NULL,
+  `Id` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(30) NOT NULL,
   `Description` VARCHAR(200) NULL,
   `Image1Path` VARCHAR(200) NULL,

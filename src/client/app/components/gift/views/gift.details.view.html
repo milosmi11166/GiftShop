@@ -1,0 +1,112 @@
+<div class="container">
+    <div class="pull-right backtolist">
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9 page-content col-thin-right">
+            <div class="inner inner-box ads-details-wrapper">
+                <h2> {{vm.gift.Name}}</h2>
+                <span class="info-row"> <span class="date"><i class=" icon-clock"> </i> Today 1:21 pm </span> - <span class="category">{{vm.gift.CategoryId}} </span>-
+                <span class="item-location"><i
+                                class="fa fa-map-marker"></i> </span> </span>
+
+                <div class="ads-image ads-img-v2">
+                    <div class="img-slider-box">
+                        <div class="slider-left">
+                            <ul class="bxslider">
+                                <li><img ng-attr-src="{{'assets/images/' + vm.gift.Name + '.jpg'}}" alt="img1" /></li>
+                            </ul>
+                        </div>
+
+                        <div id="bx-pager">
+                            <!--<a class="thumb-item-link" data-slide-index="0" href=""><img src="assets/images/Samsung Galaxy s7.jpg" alt="img1" /></a>
+                            <a class="thumb-item-link" data-slide-index="1" href=""><img src="assets/images/Samsung Galaxy s7.jpg" alt="img2" /></a>
+                            <a class="thumb-item-link" data-slide-index="2" href=""><img src="assets/images/Samsung Galaxy s7.jpg" alt="img3" /></a>-->
+                        </div>
+                    </div>
+                    <!--gift-image-->
+                </div>
+
+
+                <div class="Ads-Details">
+                    <h5 class="list-title"><strong>Gift Details</strong></h5>
+
+                    <div class="row">
+                        <div class="ads-details-info col-md-8">
+                            <p> {{vm.gift.Description}} </p>
+                            <ul class="list-circle">
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <aside class="panel panel-body panel-details">
+                                <ul>
+                                    <li>
+                                        <p class=" no-margin "><strong>Type:</strong> {{vm.gift.CategoryId}}</p>
+                                    </li>
+                                </ul>
+                            </aside>
+                            <div class="ads-action">
+                                <ul class="list-border">
+                                    <li>
+                                        <a href="#"> <i class=" fa fa-user"></i> More gifts by User </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" data-toggle="modal"> <i class="fa icon-info-circled-alt"></i> Report abuse </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-footer text-left"><a ng-show="!vm.isMyGift" class="btn  btn-default" data-toggle="modal" href="#contactAdvertiser"><i
+                                    class=" icon-mail-2"></i> Make Offer </a></div>
+                </div>
+            </div>
+            <!--/.ads-details-wrapper-->
+            <div class="inner inner-box ads-details-wrapper">
+                <h2>Current Offers</h2>
+            </div>
+        </div>
+        <!--/.page-content-->
+
+        <div class="col-sm-3  page-sidebar-right">
+            <aside>
+                <div class="panel sidebar-panel panel-contact-seller">
+                    <div class="panel-heading">Contact Owner</div>
+                    <div class="panel-content user-info">
+                        <div class="panel-body text-center">
+                            <div class="seller-info">
+                                <h3 class="no-margin">{{vm.owner.FullName}}</h3>
+
+                                <p>Address: <strong>{{vm.owner.Address}}</strong></p>
+
+                                <p>Phone: <strong>{{vm.owner.Phone}}</strong></p>
+                            </div>
+                            <div class="user-ads-action">
+                                <a ng-show="!vm.isMyGift" href="#" data-toggle="modal" class="btn  btn-default btn-block">
+                                    <iclass=" icon-mail-2">
+                                        </i> Make Offer
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel sidebar-panel">
+                    <div class="panel-heading">Tips for Biders</div>
+                    <div class="panel-content">
+                        <div class="panel-body text-left">
+                            <ul class="list-check">
+                                <li> Contact donator to get more info</li>
+                                <li> Check the item before you buy</li>
+                            </ul>
+                            <p><a class="pull-right" href="#"> Know more <i
+                                            class="fa fa-angle-double-right"></i> </a></p>
+                        </div>
+                    </div>
+                </div>
+                <!--/.categories-list-->
+            </aside>
+        </div>
+        <!--/.page-side-bar-->
+    </div>
+</div>

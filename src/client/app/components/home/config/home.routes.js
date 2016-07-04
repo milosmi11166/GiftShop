@@ -9,7 +9,6 @@
                 categoryStore: ['categoryService', function (categoryService) {
                     // Get the correct module (API or localStorage).
                     return categoryService.then(function (module) {
-                        module.get();
                         return module;
                     });
                 }]

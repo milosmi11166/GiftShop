@@ -3,7 +3,7 @@ insert into giftshop.usertype
 values (1, "Administrator"), (2, "User");
 
 insert into giftshop.category
-values (1, "Odeća"), (2, "Mobilni telefoni"),(3, "Automobili"), (4, "Rečunari");
+values (1, "Odeća"), (2, "Mobilni telefoni"),(3, "Automobili"), (4, "Računari");
 
 insert into giftshop.user
 values (1, "pera@gmail.com", "AFSDF@$#OJFASDH@#$@O#PDQSDA455356afsdfSDF#@$@QSADFAFVCVzxcxclfg", "Petar Petrović", "Strahinjića Bana 133, Beograd", "0651659751", now(), 2);

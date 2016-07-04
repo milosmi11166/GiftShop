@@ -7,7 +7,9 @@ var AppConfig = (function () {
     // Init module configuration options
     var appModuleDependencies = [
         'ui.router',
-        'ngResource'
+        'ngResource',
+        'cgNotify',
+        'angular-growl'
     ];
 
     // cgNotify a new vertical module

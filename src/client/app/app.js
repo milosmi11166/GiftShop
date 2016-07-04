@@ -12,3 +12,12 @@ angular.element(document).ready(function () {
     //Then init the app
     angular.bootstrap(document, [AppConfig.appModuleName]);
 });
+
+
+// angular.module(AppConfig.appModuleName).config(function ($locationProvider) {
+//     // use the HTML5 History API
+//     $locationProvider.html5Mode({
+//         enabled: true,
+//         requireBase: false
+//     });
+// });
