@@ -34,7 +34,6 @@ angular.module('authentication')
             // },
 
             register: function (user) {
-
                 return $resource(GLOBAL_SETTINGS.apiPath + 'user/register', null, null)
                     .save(user, function success(resp) {
                         user = resp;

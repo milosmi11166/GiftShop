@@ -56,19 +56,12 @@ angular.module('gift')
                     .query(cb);
             },
 
-            getOffers: function (ownerId) {
-                return $resource(GLOBAL_SETTINGS.apiPath + 'offer/ownerId/:ownerId', { ownerId: ownerId }, null)
-                    .query(function (resp) {
-                        angular.copy(resp, store.myOffers);
-                    });
-            },
-
             insert: function (gift) {
                 //temp
                 gift.image1Path = null;
                 gift.image2Path = null;
                 gift.image3Path = null;
-                gift.ownerId = authenticationService.currentUser.Id;
+                gift.ownerId = authenticationService.currentUser.id;
                 return store.api.save(gift,
                     function success(resp) {
                         store.gifts.push(gift);
@@ -88,13 +81,9 @@ angular.module('gift')
 
             remove: function (giftId) {
                 return $resource(GLOBAL_SETTINGS.apiPath + 'gift/id/:giftId', null, null)
-                    .remove({ giftId: giftId },
-                    function success(resp) {
+                    .remove({ giftId: giftId }).$promise;
+            },
 
-                    }, function error(err) {
-
-                    }).$promise;
-            }
         };
 
         return store;

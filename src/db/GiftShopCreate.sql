@@ -89,12 +89,13 @@ ENGINE = InnoDB;
 -- Table `GiftShop`.`Offer`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `GiftShop`.`Offer` (
-  `Id` INT NOT NULL,
+  `Id` INT NOT NULL AUTO_INCREMENT,
   `OwnerId` INT NOT NULL,
   `OffererId` INT NOT NULL,
   `GiftId` INT NOT NULL,
-  `Created` DATETIME NOT NULL,
-  `Accepted` TINYINT(1) NOT NULL,
+  `Created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Accepted` TINYINT(1) NOT NULL DEFAULT 0,
+  `Comment`  VARCHAR(300) NULL,
   PRIMARY KEY (`Id`),
   INDEX `fk_Offer_User1_idx` (`OwnerId` ASC),
   INDEX `fk_Offer_User2_idx` (`OffererId` ASC),

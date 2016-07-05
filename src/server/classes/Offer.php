@@ -8,13 +8,13 @@ class Offer
     public $giftId;
     public $created;
     public $accepted;
+    public $comment;
 
-	public function __construct($id, $ownerId, $offererId, $giftId, $created, $accepted){
-        $this->id = $id;
+	public function __construct($ownerId, $offererId, $giftId, $accepted, $comment){
         $this->ownerId = $ownerId;
         $this->offererId = $offererId;
         $this->giftId = $giftId;
-        $this->created = $created;
+        $this->comment = $comment;
         $this->accepted = $accepted;
     }
 	
@@ -28,7 +28,8 @@ class Offer
             'offererId' => $this->offererId,
             'giftId' => $this->giftId,
             'created' => $this->created,
-            'accepted' => $this->accepted
+            'accepted' => $this->accepted,
+            'comment' => $this->comment
         );
 
         return json_encode($json);

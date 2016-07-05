@@ -21,6 +21,7 @@
         $scope.$on('authenticationService:loginSuccess', function (event, user) {
             vm.currentUser = user;
             localStorage.setItem(STORAGE_ID, JSON.stringify(user));
+            authenticationService.currentUser = user;
         });
 
         function logout() {

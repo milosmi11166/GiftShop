@@ -25,7 +25,7 @@
                     <th data-type="numeric" data-sort-initial="true"></th>
                     <th> Photo</th>
                     <th data-sort-ignore="true"> Gift Details</th>
-                    <th> Option</th>
+                    <!--<th> Option</th>-->
                 </tr>
             </thead>
             <tbody>
@@ -37,27 +37,28 @@
                                             </label>
                         </div>
                     </td>
-                    <td style="width:14%" class="add-img-td">
+                    <td style="width:19%" class="add-img-td">
                         <a><img class="thumbnail  img-responsive" src="{{gift.Image1Path}}" alt="img"></a>
                     </td>
-                    <td style="width:74%" class="ads-details-td">
+                    <td style="width:79%" class="ads-details-td">
                         <div>
                             <p><strong> <a ui-sref="gift({giftId: gift.id || gift.Id})" ng-attr-title="{{gift.Name}}">{{gift.Name}} </a>
                                             </strong></p>
 
                             <p><strong> Descrition </strong>{{gift.Description}}</p>
+                            <p><strong> Offer comment </strong>{{gift.Comment}}</p>
 
                             </p>
                         </div>
                     </td>
-                    <td style="width:10%" class="action-td">
+                    <!--<td style="width:10%" class="action-td">
                         <div>
                             <p>
-                                <a class="btn btn-danger btn-xs"> <i class=" fa fa-trash"></i> Cancel
+                                <a class="btn btn-danger btn-xs"> <i class=" fa fa-trash"></i> Cancel offer
                                 </a>
                             </p>
                         </div>
-                    </td>
+                    </td>-->
                 </tr>
             </tbody>
         </table>

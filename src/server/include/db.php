@@ -65,7 +65,7 @@
         
         public function readGift($id){
             
-            $query = "select * from gift where id=:id";
+            $query = "select g.*, c.Description as Category from gift g join category c on c.id = g.categoryId where g.id=:id";
             
             $stmt = self::$connection->prepare($query);
             
@@ -95,7 +95,7 @@
         
         public function readOffersForOwner($ownerId) {
             
-            $query = "select * from offer where ownerid=:ownerId";
+            $query = "select o.*, g.Description, g.Name from offer o join gift g on g.id = o.giftId where o.ownerid=:ownerId";
             
             $stmt = self::$connection->prepare($query);
             
@@ -108,9 +108,26 @@
             return json_encode($result);
         }
         
+        public function readOffersForGift($giftId){
+            $query = "select o.*, u.fullName as offerer, u.id as offererId
+                    from offer o join gift g on o.giftId = g.id join user u on u.id = o.offererId
+                    where g.id =:giftId";
+
+            $stmt = self::$connection->prepare($query);
+            
+            $stmt->bindParam(":giftId", $giftId, PDO::PARAM_INT);
+            
+            $stmt->execute();
+            
+            $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+            
+            return json_encode($result);
+        }
         public function readGiftsBySearchTerm($ownerId, $searchTerm){
             
-            $query = "select * from gift where ownerId<>:id and name like :searchTerm ";
+            $query = "select g.* 
+                    from gift g join category c on c.id = g.categoryId 
+                    where ownerId<>:id and (g.name like :searchTerm or g.description like :searchTerm or c.description like :searchTerm) ";
             
             $stmt = self::$connection->prepare($query);
             
@@ -128,16 +145,28 @@
         
         public function readGiftsForCategory($ownerId, $categoryId){
             
-            $query = "select * from gift where ownerId<>:id and categoryId = :categoryId ";
+            if($categoryId != "-1"){
+                $query = "select * from gift where ownerId<>:id and categoryId = :categoryId ";
             
-            $stmt = self::$connection->prepare($query);
+                $stmt = self::$connection->prepare($query);
             
-            $stmt->bindParam(":id", $ownerId, PDO::PARAM_INT);
-            $stmt->bindParam(":categoryId", $categoryId, PDO::PARAM_STR);
+                $stmt->bindParam(":id", $ownerId, PDO::PARAM_INT);
+                $stmt->bindParam(":categoryId", $categoryId, PDO::PARAM_STR);
             
-            $stmt->execute();
+                $stmt->execute();
             
-            $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+                $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+            }else{
+                $query = "select * from gift where ownerId<>:id";
+            
+                $stmt = self::$connection->prepare($query);
+            
+                $stmt->bindParam(":id", $ownerId, PDO::PARAM_INT);
+            
+                $stmt->execute();
+            
+                $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+            }
             
             return json_encode($result);
         }
@@ -155,8 +184,10 @@
             $stmt->bindParam(':ownerId', $gift->ownerId, PDO::PARAM_INT);
             $stmt->execute();
 
-            if ($stmt->rowCount() == 1)
+            if ($stmt->rowCount() == 1){
+                $gift->id = self::$connection->lastInsertId();
                 return $gift;
+            }
             else
                 return NULL;
         }
@@ -182,28 +213,29 @@
         }
         
         public function createOffer($offer){
-            $stmt = self::$connection->prepare("insert into offer values (:id, :ownerId, :offererId, :giftId, :created, :accepted)");
-            $stmt->bindParam(':id', $offer->id, PDO::PARAM_INT);
+            $stmt = self::$connection->prepare("insert into offer values (null, :ownerId, :offererId, :giftId, DEFAULT, DEFAULT, :comment)");
             $stmt->bindParam(':ownerId', $offer->ownerId, PDO::PARAM_INT);
             $stmt->bindParam(':offererId', $offer->offererId, PDO::PARAM_INT);
             $stmt->bindParam(':giftId', $offer->giftId, PDO::PARAM_INT);
-            $stmt->bindParam(':created', $offer->created, PDO::PARAM_STR);
-            $stmt->bindParam(':accepted', $offer->accepted, PDO::PARAM_INT);
+            $stmt->bindParam(':comment', $offer->comment, PDO::PARAM_STR);
             $stmt->execute();
 
-            if ($stmt->rowCount() == 1)
+            if ($stmt->rowCount() == 1){
+                $offer->id = self::$connection->lastInsertId();
                 return $offer;
+            }
             else
                 return NULL;
         }
         
         public function updateOffer($offerId, $offer){
-            $stmt = self::$connection->prepare("update offer set id = :id, ownerId = :ownerId, offererId = :offererId, giftId = :giftId, created = :created, accepted = :accepted where id = :offerId");
-            $stmt->bindParam(':id', $offer->id, PDO::PARAM_INT);
+            $stmt = self::$connection->prepare("update offer 
+            set  ownerId = :ownerId, offererId = :offererId, giftId = :giftId, accepted = :accepted 
+            where id = :offerId");
+
             $stmt->bindParam(':ownerId', $offer->ownerId, PDO::PARAM_INT);
             $stmt->bindParam(':offererId', $offer->offererId, PDO::PARAM_INT);
             $stmt->bindParam(':giftId', $offer->giftId, PDO::PARAM_INT);
-            $stmt->bindParam(':created', $offer->created, PDO::PARAM_STR);
             $stmt->bindParam(':accepted', $offer->accepted, PDO::PARAM_INT);
             $stmt->bindParam(':offerId', $offerId, PDO::PARAM_INT);
             $stmt->execute();

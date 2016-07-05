@@ -42,7 +42,7 @@
                             <aside class="panel panel-body panel-details">
                                 <ul>
                                     <li>
-                                        <p class=" no-margin "><strong>Type:</strong> {{vm.gift.CategoryId}}</p>
+                                        <p class=" no-margin "><strong>Category:</strong> {{vm.gift.Category}}</p>
                                     </li>
                                 </ul>
                             </aside>
@@ -58,13 +58,92 @@
                             </div>
                         </div>
                     </div>
-                    <div class="content-footer text-left"><a ng-show="!vm.isMyGift" class="btn  btn-default" data-toggle="modal" href="#contactAdvertiser"><i
-                                    class=" icon-mail-2"></i> Make Offer </a></div>
+                    <div class="content-footer text-left">
+                        <btn ng-disabled="vm.offerMade || vm.haveAcceptedOffer" 
+                             ng-attr-title="{{vm.title ? vm.title : ''}}" 
+                             ng-show="!vm.isMyGift"
+                             class="btn btn-success"
+                             data-toggle="modal"
+                             href="#makeOffer">
+                            <i class=""></i> Make Offer
+                        </btn>
+                        <span ng-show="vm.offerMade || vm.haveAcceptedOffer">{{vm.title}}</span>
+                    </div>
                 </div>
             </div>
             <!--/.ads-details-wrapper-->
-            <div class="inner inner-box ads-details-wrapper">
-                <h2>Current Offers</h2>
+
+            <div class="modal fade" id="makeOffer" tabindex="-1" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                            <h4 class="modal-title"><i class=" icon-mail-2"></i> Make offer for: {{vm.gift.Name}} </h4>
+                        </div>
+                        <div class="modal-body">
+                            <form role="form">
+                                <div class="form-group">
+                                    <label for="comment" class="control-label">Comment:</label>
+
+                                    <textarea ng-model="vm.offer.comment" ng-required="true" class="form-control" id="comment" name="comment">
+                                    </textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="owner" class="control-label">Gift Owner</label>
+                                    <input ng-model="vm.owner.FullName" ng-disabled="true" id="owner" type="text" data-placement="top" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="offerer" class="control-label">Offerer</label>
+                                    <input ng-model="vm.currentUser.fullName" ng-disabled="true" id="offerer" type="text" data-placement="top" class="form-control">
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button ng-click="vm.makeOffer(vm.offer);" type="button" class="btn btn-success pull-right" data-dismiss="modal"> Confirm
+                                    </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="inner inner-box ads-details-wrapper" style="padding: 0;">
+                <div class="col-sm-12 page-content" style="padding: 0;">
+                    <div class="inner-box">
+                        <h2 class="title-2"><i class=""></i> Current Offers </h2>
+
+                        <div style="clear:both"></div>
+
+                        <div ng-show="vm.currentOffers.length > 0" class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th><span> Offerer</span></th>
+                                        <th>Comment</th>
+                                        <th> Created</th>
+                                        <th ng-show="vm.isMyGift"> Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="offer in vm.currentOffers" ng-class="offer.accepted != 0 ? 'accepted-offer' : ''">
+                                        <td>{{offer.offerer}}</td>
+                                        <td>{{offer.comment}}</td>
+
+                                        <td>{{offer.created}}</td>
+                                        <td ng-show="vm.isMyGift">
+                                            <span ng-hide="offer.accepted == '1'" ng-click="vm.acceptOffer(offer);" class="label label-success" style="cursor: pointer">Accept</span>
+                                            <span ng-show="offer.accepted == '1'" class="label label-success">Accepted</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div style="clear:both"></div>
+
+                    </div>
+                </div>
             </div>
         </div>
         <!--/.page-content-->
@@ -83,23 +162,23 @@
                                 <p>Phone: <strong>{{vm.owner.Phone}}</strong></p>
                             </div>
                             <div class="user-ads-action">
-                                <a ng-show="!vm.isMyGift" href="#" data-toggle="modal" class="btn  btn-default btn-block">
-                                    <iclass=" icon-mail-2">
-                                        </i> Make Offer
+                                <a ng-show="!vm.isMyGift" href="#" data-toggle="modal" class="btn btn-success btn-block">
+                                    <i class=" icon-mail-2">
+                                        </i> Send message
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="panel sidebar-panel">
-                    <div class="panel-heading">Tips for Biders</div>
+                    <div class="panel-heading">Tips for Offerers</div>
                     <div class="panel-content">
                         <div class="panel-body text-left">
                             <ul class="list-check">
                                 <li> Contact donator to get more info</li>
-                                <li> Check the item before you buy</li>
+                                <li> Check the item before you make an offer</li>
                             </ul>
-                            <p><a class="pull-right" href="#"> Know more <i
+                            <p><a class="pull-right" href=""> Know more <i
                                             class="fa fa-angle-double-right"></i> </a></p>
                         </div>
                     </div>

@@ -35,7 +35,7 @@ angular.module('user').config(['$stateProvider',
                     }]
                 }
             })
-            .state('user.myOffers', {
+            .state('user.myGiftsOffers', {
                 url: '/offers',
                 templateUrl: 'app/components/user/views/user.myOffers.view.html',
                 controller: 'user.myOffersController',

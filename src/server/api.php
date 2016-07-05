@@ -21,7 +21,7 @@
     {
         $d = json_decode($json, true);
         
-        return new Offer($d['id'], $d['ownerId'], $d['offererId'], $d['giftId'], $d['created'], $d['accepted']);
+        return new Offer($d['ownerId'], $d['offererId'], $d['giftId'], $d['accepted'],$d['comment']);
     }
     
     function deserializeUser($json)
@@ -114,31 +114,39 @@
                     
                     $status=200;
                 }
+                else if($number_of_url_elements==3 and $url_elements[1]=='gift' and $url_elements[3]=='offers'){
+
+                    $giftId = $url_elements[2];
+
+                    $data=$db->readOffersForGift($giftId);
+
+                    $status=200;
+                }
                 break;
                 
                 
             case 'post':
                 if($number_of_url_elements==2 and $url_elements[1]=='user' and $url_elements[2]=='register'){
                             
-                            $json = file_get_contents('php://input');
-                            $user = deserializeUser($json);
-                            $createdUser = $db->createUser($user);
+                        $json = file_get_contents('php://input');
+                        $user = deserializeUser($json);
+                        $createdUser = $db->createUser($user);
 
-                            $data = $createdUser->toJSON();
+                        $data = $createdUser->toJSON();
 
-                            $status=201;
+                        $status=201;
                 }
                 else if($number_of_url_elements==2 and $url_elements[1]=='user' and $url_elements[2]=='login'){
                             
-                            $json = file_get_contents('php://input');
-                            $d = json_decode($json, true);
-                            $data=$db->readUserLogin($d['username'], $d['password']);  
-                                 
-                            if($data != NULL){
-                                $status=200;
-                            } else{
-                                $status=404; 
-                            }
+                        $json = file_get_contents('php://input');
+                        $d = json_decode($json, true);
+                        $data=$db->readUserLogin($d['username'], $d['password']);  
+                                
+                        if($data != NULL){
+                            $status=200;
+                        } else{
+                            $status=404; 
+                        }
                 }
 				else if($number_of_url_elements==1 and $url_elements[1]=='gift'){
                     
