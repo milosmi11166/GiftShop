@@ -16,6 +16,7 @@
             //
             offerApi.getForUser(currentUser.id, function (resp) {
                 $scope.model.myOffers = resp;
+                $scope.sharedData.myGiftsOffersCount = resp.length;
             });
             //
             $scope.model.togleSelection = togleSelection;

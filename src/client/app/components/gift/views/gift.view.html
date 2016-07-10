@@ -7,9 +7,8 @@
 
                 <div class="row">
                     <div class="col-sm-12">
-                        <form class="form-horizontal">
+                        <form name="giftForm" class="form-horizontal">
                             <fieldset>
-                                <!-- Select Basic -->
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">Category</label>
 
@@ -22,7 +21,6 @@
                                         </select>
                                     </div>
                                 </div>
-                                <!-- Multiple Radios (inline) -->
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">Active</label>
 
@@ -66,21 +64,39 @@
                                 </div>
 
 
-                                <!-- photo -->
-                                <div class="form-group">
+                                <!-- images -->
+                                <div ng-show="vm.gift.id" class="form-group">
                                     <label class="col-md-3 control-label" for="textarea"> Image </label>
 
                                     <div class="col-md-8">
                                         <div class="mb10">
-                                            <input ng-model="vm.gift.image" id="input-upload-img1" type="file" class="file" data-preview-file-type="text">
+                                            <input type="file" ngf-select ng-model="vm.gift.file1" name="file1" accept="image/*" ngf-max-size="20MB" ngf-model-invalid="vm.gift.errorFile1">
+                                            <i ng-show="giftForm.file.$error.maxSize">File too large 
+          {{vm.gift.errorFile1.size / 1000000  |number:1}}MB: max 20M</i>
+                                            <img ng-show="giftForm.file1.$valid" ngf-thumbnail="vm.gift.file1" class="thumb" style="margin-top:20px;">
+                                            <img ng-if="vm.gift.Image1Path && !vm.gift.file1" ng-attr-src="{{'../' + vm.gift.Image1Path }}" alt="img1" class="thumb" style="margin-top:20px;"/>
+                                            <button ng-click="vm.gift.file1 = null;" ng-show="vm.gift.file1">Remove</button>
+                                            <button ng-click="vm.uploadPic(vm.gift.file1, 1)" ng-show="vm.gift.file1">Upload</button>
                                         </div>
                                         <div class="mb10">
-                                            <input id="input-upload-img2" type="file" class="file" data-preview-file-type="text">
+                                            <input type="file" ngf-select ng-model="vm.gift.file2" name="file2" accept="image/*" ngf-max-size="20MB" ngf-model-invalid="vm.gift.errorFile2">
+                                            <i ng-show="giftForm.file.$error.maxSize">File too large 
+          {{vm.gift.errorFile2.size / 1000000  |number:1}}MB: max 20M</i>
+                                            <img ng-show="giftForm.file2.$valid" ngf-thumbnail="vm.gift.file2" class="thumb" style="margin-top:20px;">
+                                            <img ng-if="vm.gift.Image2Path && !vm.gift.file2" ng-attr-src="{{'../' + vm.gift.Image2Path }}" alt="img2" class="thumb" style="margin-top:20px;"/>
+                                            <button ng-click="vm.gift.file2 = null;" ng-show="vm.gift.file2">Remove</button>
+                                            <button ng-click="vm.uploadPic(vm.gift.file2, 2)" ng-show="vm.gift.file2">Upload</button>
                                         </div>
-                                        <div class="mb10">
-                                            <input id="input-upload-img3" type="file" class="file" data-preview-file-type="text">
+                                       <div class="mb10">
+                                            <input type="file" ngf-select ng-model="vm.gift.file3" name="file3" accept="image/*" ngf-max-size="20MB" ngf-model-invalid="vm.gift.errorFile3">
+                                            <i ng-show="giftForm.file.$error.maxSize">File too large 
+          {{vm.gift.errorFile3.size / 1000000  |number:1}}MB: max 20M</i>
+                                            <img ng-show="giftForm.file3.$valid" ngf-thumbnail="vm.gift.file3" class="thumb" style="margin-top:20px;">
+                                            <img ng-if="vm.gift.Image3Path && !vm.gift.file3" ng-attr-src="{{'../' + vm.gift.Image3Path }}" alt="img3" class="thumb" style="margin-top:20px;"/>
+                                            <button ng-click="vm.gift.file3 = null;" ng-show="vm.gift.file3">Remove</button>
+                                            <button ng-click="vm.uploadPic(vm.gift.file3, 3)" ng-show="vm.gift.file3">Upload</button>
                                         </div>
-                                        <p class="help-block">Add up to 5 photos. Use a real image of your gift, not catalogs.</p>
+                                        <p class="help-block">Add up to 3 photos. Use a real image of your gift, not catalogs.</p>
                                     </div>
                                 </div>
 
@@ -100,11 +116,9 @@
                                 <div class="form-group">
                                     <label class="col-md-3 control-label"></label>
 
-                                    <div ng-show="!vm.gift.id" class="col-md-8"><button ng-click="vm.addGift()" ng-disabled="!vm.accepted" 
-                                            id="button1id" class="btn btn-success btn-lg">Add Gift</button></div>
+                                    <div ng-show="!vm.gift.id" class="col-md-8"><button ng-click="vm.addGift()" ng-disabled="!vm.accepted" id="button1id" class="btn btn-success btn-lg">Add Gift</button></div>
 
-                                    <div ng-show="vm.gift.id" class="col-md-8"><button ng-click="vm.updateGift()" 
-                                            id="button1id" class="btn btn-success btn-lg">Update Gift</button>
+                                    <div ng-show="vm.gift.id" class="col-md-8"><button ng-click="vm.updateGift()" id="button1id" class="btn btn-success btn-lg">Update Gift</button>
                                         <span ng-show="vm.updated">Gift succesfully updated</span></div>
                                 </div>
                             </fieldset>

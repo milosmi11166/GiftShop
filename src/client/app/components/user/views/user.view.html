@@ -26,15 +26,15 @@
                                 <ul class="acc-list">
                                     <li>
                                         <a ui-sref="user.myGifts" ng-class="sharedData.activeTab === 'myGifts' ? 'active' : ''">
-                                            <i class="icon-docs"></i> My Gifts <span class="badge">3</span> </a>
+                                            <i class="icon-docs"></i> My Gifts <span class="badge">{{sharedData.myGiftsCount}}</span> </a>
                                     </li>
                                     <li>
                                         <a ui-sref="user.myGiftsOffers" ng-class="sharedData.activeTab === 'myOffers' ? 'active' : ''">
-                                            <i class="icon-mail"></i> My Gifts Offers <span class="badge">1</span> </a>
+                                            <i class="icon-mail"></i> My Gifts Offers <span class="badge">{{sharedData.myGiftsOffersCount}}</span> </a>
                                     </li>
                                     <li>
                                         <a ui-sref="user.myOffers">
-                                            <i class="icon-heart"></i> My Offers <span class="badge">4</span> </a>
+                                            <i class="icon-heart"></i> My Offers <span class="badge">{{sharedData.myOffersCount}}</span> </a>
                                     </li>
                                 </ul>
                             </div>

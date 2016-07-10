@@ -4,9 +4,9 @@
         .module('user')
         .controller('user.myGiftsController', myGiftsController);
 
-    myGiftsController.$inject = ['$scope', 'giftStore', 'authenticationService', 'growl'];
+    myGiftsController.$inject = ['$scope', '$window', 'giftStore', 'authenticationService', 'growl'];
 
-    function myGiftsController($scope, giftStore, authenticationService, growl) {
+    function myGiftsController($scope, $window, giftStore, authenticationService, growl) {
         var currentUser = null;
         $scope.model = {};
 
@@ -16,6 +16,7 @@
 
             giftStore.getByOwner(currentUser.id, function (resp) {
                 $scope.model.myGifts = resp;
+                $scope.sharedData.myGiftsCount = resp.length;
             });
             //
             $scope.model.togleSelection = togleSelection;
@@ -29,14 +30,17 @@
         }
 
         function removeGift(gift) {
-            giftStore.remove(gift.Id).then(function (resp) {
-                $scope.model.myGifts = $scope.model.myGifts.filter(function (item) {
-                    return item.Id !== gift.Id;
+            var confirm = $window.confirm('Are you sure that you want to delete this gift?');
+            if (confirm) {
+                giftStore.remove(gift.Id).then(function (resp) {
+                    $scope.model.myGifts = $scope.model.myGifts.filter(function (item) {
+                        return item.Id !== gift.Id;
+                    });
+                    growl.success('Gift successfully deleted.');
+                }, function (err) {
+                    growl.error('Error deleting gift');
                 });
-                growl.success('Gift successfully deleted.');
-            }, function (err) {
-                growl.error('Error deleting gift');
-            });
+            }
         }
     }
 })();

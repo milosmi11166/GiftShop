@@ -22,11 +22,14 @@
     <!-- styles needed for carousel slider -->
     <link href="assets/css/owl.carousel.css" rel="stylesheet">
     <link href="assets/css/owl.theme.css" rel="stylesheet">
+    <link href="assets/plugins/bxslider/jquery.bxslider.css" rel="stylesheet"/>
+
 
     <!--bower libs styles-->
     <link href="assets/libs/angular-notify/dist/angular-notify.min.css" rel="stylesheet">
     <link href="assets/libs/angular-growl-v2/build/angular-growl.min.css" rel="stylesheet">
     <link href="assets/libs/bootstrap3-dialog/dist/css/bootstrap-dialog.min.css" rel="stylesheet">
+    <link href="assets/libs/angular-bootstrap/ui-bootstrap-csp.css" rel="stylesheet">
 
     <script src="assets/libs/angular/angular.js"></script>
     <script src="assets/libs/jquery/dist/jquery.min.js"></script>
@@ -109,9 +112,15 @@
     <!-- Bower compoments -->
     <script src="assets/libs/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="assets/libs/angular-resource/angular-resource.js"></script>
-    <script src="assets/libs/angular-notify/dist/angular-notify.min.js"></script>
     <script src="assets/libs/angular-growl-v2/build/angular-growl.min.js"></script>
     <script src="assets/libs/bootstrap3-dialog/dist/js/bootstrap-dialog.js"></script>
+    
+    <script src="assets/libs/ng-file-upload/ng-file-upload-all.min.js"></script>
+    <script src="assets/libs/ng-file-upload/ng-file-upload.min.js"></script>
+
+    <script src="assets/libs/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.js"></script>
+    <!--<script src="assets/libs/angular-bootstrap/ui-bootstrap.min.js"></script>-->
     <!-- End of Bower components -->
 
     <!-- Angular setup -->
@@ -177,6 +186,15 @@
     <!-- include jquery.fs plugin for custom scroller and selecter  -->
     <script src="assets/plugins/jquery.fs.scroller/jquery.fs.scroller.js"></script>
     <script src="assets/plugins/jquery.fs.selecter/jquery.fs.selecter.js"></script>
+
+
+    <!-- bxSlider Javascript file -->
+    <script src="assets/plugins/bxslider/jquery.bxslider.min.js"></script>
+    <script>
+        $('.bxslider').bxSlider({
+            pagerCustom: '#bx-pager'
+        });
+    </script>
 
 
     <!-- include custom script for site  -->

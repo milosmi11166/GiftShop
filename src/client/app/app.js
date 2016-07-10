@@ -13,7 +13,13 @@ angular.element(document).ready(function () {
     angular.bootstrap(document, [AppConfig.appModuleName]);
 });
 
+angular.module(AppConfig.appModuleName).config(['$httpProvider', function ($httpProvider) {
+    $httpProvider.interceptors.push('httpRequestInterceptor');
 
+    // var STORAGE_ID = 'current-user';
+    // var item = JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
+    // $httpProvider.defaults.headers.common['Authorization'] = item ? 'Bearer ' + item.jwt : '';
+}])
 // angular.module(AppConfig.appModuleName).config(function ($locationProvider) {
 //     // use the HTML5 History API
 //     $locationProvider.html5Mode({
@@ -21,3 +27,16 @@ angular.element(document).ready(function () {
 //         requireBase: false
 //     });
 // });
+angular.module(AppConfig.appModuleName).factory('httpRequestInterceptor',
+    ['$rootScope', function ($rootScope) {
+        return {
+            request: function ($config) {
+                var STORAGE_ID = 'current-user';
+                var item = JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
+                if (item && item.jwt) {
+                    $config.headers['Authorization'] = 'Bearer ' + item.jwt;
+                }
+                return $config;
+            }
+        };
+    }]);

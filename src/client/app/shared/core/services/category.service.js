@@ -11,16 +11,13 @@
 				return $injector.get('categoryLocalStorage');
 			});
 	})
-
-	.factory('categoryApi', function ($resource) {
+	.factory('categoryApi', function ($resource, authenticationService) {
 		'use strict';
-
 		var store = {
 			categories: [],
-
 			api: $resource(GLOBAL_SETTINGS.apiPath + 'category/:id', null,
 				{
-					update: { method:'PUT' }
+					update: { method: 'PUT' },
 				}
 			),
 
@@ -28,7 +25,7 @@
 				return store.api.query(cb);
 			},
 
-			
+
 		};
 
 		return store;

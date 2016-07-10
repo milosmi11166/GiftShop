@@ -8,8 +8,10 @@ var AppConfig = (function () {
     var appModuleDependencies = [
         'ui.router',
         'ngResource',
-        'cgNotify',
-        'angular-growl'
+        'angular-growl',
+        'ngFileUpload',
+        'ui.bootstrap',
+        'ngAnimate'
     ];
 
     // cgNotify a new vertical module

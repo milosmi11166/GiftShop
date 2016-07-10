@@ -23,7 +23,7 @@
         function addGift() {
             giftStore.insert(vm.gift).then(function (data) {
                 growl.success('Gift successfully added');
-                $state.go('user.myGifts');
+                $state.go('editGift', { giftId: data.id });
             }, function (err) {
                 alert(err);
             });

@@ -12,7 +12,6 @@
                     <label class="col-xs-5 control-label text-right">Search <br>
                                             <a ng-click="model.searchName = '';" title="clear filter" class="clear-filter">[clear]</a>
                                         </label>
-
                     <div class="col-xs-7 searchpan">
                         <input ng-model="model.searchName" type="text" class="form-control" id="filter">
                     </div>
@@ -38,7 +37,7 @@
                         </div>
                     </td>
                     <td style="width:14%" class="add-img-td">
-                        <a><img class="thumbnail  img-responsive" ng-attr-src="{{'assets/images/' + gift.Name + '.jpg'}}" alt="img"></a>
+                        <a><img class="thumbnail  img-responsive" ng-src="{{'../' + (gift.Image1Path || gift.Image2Path || gift.Image3Path) }}"  alt="img" style="max-height:50px;"></a>
                     </td>
                     <td style="width:74%" class="ads-details-td">
                         <div>

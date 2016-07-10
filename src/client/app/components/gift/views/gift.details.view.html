@@ -7,25 +7,36 @@
         <div class="col-sm-9 page-content col-thin-right">
             <div class="inner inner-box ads-details-wrapper">
                 <h2> {{vm.gift.Name}}</h2>
-                <span class="info-row"> <span class="date"><i class=" icon-clock"> </i> Today 1:21 pm </span> - <span class="category">{{vm.gift.CategoryId}} </span>-
-                <span class="item-location"><i
-                                class="fa fa-map-marker"></i> </span> </span>
+                <span class="info-row"> 
+                    <span class="date">
+                        <i class=" icon-clock"> </i> Today 1:21 pm </span> -
+                <span class="category">{{vm.gift.Category}} </span>
+                </span>
 
                 <div class="ads-image ads-img-v2">
-                    <div class="img-slider-box">
-                        <div class="slider-left">
-                            <ul class="bxslider">
-                                <li><img ng-attr-src="{{'assets/images/' + vm.gift.Name + '.jpg'}}" alt="img1" /></li>
-                            </ul>
+                    <div class="ads-image">
+                        <div style="height: 505px">
+                            <uib-carousel active="vm.activeImage" interval="vm.sliderInterval" no-wrap="noWrapSlides">
+                                <uib-slide ng-repeat="slide in vm.gift.images track by slide.id" index="slide.id">
+                                    <img class="img-responsive center-block" style="max-height: 500px" ng-src="{{'../' + slide.path }}" alt="img1"  style="margin:auto;">
+                                    <div class="carousel-caption">
+                                        <p>{{slide.jojojo}}</p>
+                                    </div>
+                                </uib-slide>
+                            </uib-carousel>
                         </div>
-
+                        <!--<h1 class="pricetag"> Free</h1>
+                        <ul class="bxslider">
+                            <li><img ng-attr-src="{{'../' + vm.gift.Image1Path }}" alt="img1" /></li>
+                            <li><img ng-attr-src="{{'../' + vm.gift.Image2Path }}" alt="img2" /></li>
+                            <li><img ng-attr-src="{{'../' + vm.gift.Image3Path }}" alt="img3" alt="img" /></li>
+                        </ul>
                         <div id="bx-pager">
-                            <!--<a class="thumb-item-link" data-slide-index="0" href=""><img src="assets/images/Samsung Galaxy s7.jpg" alt="img1" /></a>
-                            <a class="thumb-item-link" data-slide-index="1" href=""><img src="assets/images/Samsung Galaxy s7.jpg" alt="img2" /></a>
-                            <a class="thumb-item-link" data-slide-index="2" href=""><img src="assets/images/Samsung Galaxy s7.jpg" alt="img3" /></a>-->
-                        </div>
+                            <a class="thumb-item-link" data-slide-index="0" href=""><img ng-attr-src="{{'../' + vm.gift.Image1Path }}" alt="img1" /></a>
+                            <a class="thumb-item-link" data-slide-index="1" href=""><img ng-attr-src="{{'../' + vm.gift.Image2Path }}" alt="img2" /></a>
+                            <a class="thumb-item-link" data-slide-index="2" href=""><img ng-attr-src="{{'../' + vm.gift.Image3Path }}" alt="img3" /></a>
+                        </div>-->
                     </div>
-                    <!--gift-image-->
                 </div>
 
 
@@ -59,12 +70,8 @@
                         </div>
                     </div>
                     <div class="content-footer text-left">
-                        <btn ng-disabled="vm.offerMade || vm.haveAcceptedOffer" 
-                             ng-attr-title="{{vm.title ? vm.title : ''}}" 
-                             ng-show="!vm.isMyGift"
-                             class="btn btn-success"
-                             data-toggle="modal"
-                             href="#makeOffer">
+                        <btn ng-disabled="vm.offerMade || vm.haveAcceptedOffer" ng-attr-title="{{vm.title ? vm.title : ''}}" ng-show="!vm.isMyGift"
+                            class="btn btn-success" data-toggle="modal" href="#makeOffer">
                             <i class=""></i> Make Offer
                         </btn>
                         <span ng-show="vm.offerMade || vm.haveAcceptedOffer">{{vm.title}}</span>

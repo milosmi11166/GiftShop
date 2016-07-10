@@ -24,7 +24,7 @@
             vm.currentUser = authenticationService.currentUser;
             vm.doSearch = doSearch;
 
-            vm.doSearch(vm.currentUser.id, vm.categoryId, vm.keyword);
+            vm.doSearch((vm.currentUser && vm.currentUser.id)  ? vm.currentUser.id : '-1', vm.categoryId, vm.keyword);
             //
         })();
 

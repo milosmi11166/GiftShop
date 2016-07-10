@@ -13,7 +13,7 @@
 
         </div>
         <div class="col-sm-4">
-            <button ng-click="vm.doSearch(vm.currentUser.id, vm.categoryId, vm.keyword);" class="btn btn-block btn-primary  "><i class="fa fa-search"></i></button>
+            <button ng-click="vm.doSearch((vm.currentUser && vm.currentUser.id) ? vm.currentUser.id : '-1', vm.categoryId, vm.keyword);" class="btn btn-block btn-primary  "><i class="fa fa-search"></i></button>
         </div>
     </div>
 </div>
@@ -56,16 +56,9 @@
                                         class="badge">{{vm.searchResults.length}}</span></a></li>
                     </ul>
                     <div class="tab-filter">
-                        <!--<select class="selectpicker" data-style="btn-select" data-width="auto">
-                                    <option>Short by</option>
-                                    <option>Price: Low to High</option>
-                                    <option>Price: High to Low</option>
-                                </select>-->
                     </div>
                 </div>
-                <!--/.tab-box-->
 
-                <!-- Mobile Filter bar-->
                 <div class="mobile-filter-bar col-lg-12  ">
                     <ul class="list-unstyled list-inline no-margin no-padding">
                         <li class="filter-toggle">
@@ -90,15 +83,15 @@
                     </ul>
                 </div>
                 <div class="menu-overly-mask"></div>
-                <!-- Mobile Filter bar End-->
 
 
                 <div class="adds-wrapper">
                     <div ng-repeat="gift in vm.searchResults" class="item-list">
                         <div class="col-sm-2 no-padding photobox">
                             <div class="add-image"><span class="photo-count"><i
-                                            class="fa fa-camera"></i> 2 </span>
-                                <a href=""><img class="thumbnail no-margin" src="{{gift.Image1Path}}" alt="img"></a>
+                                            class="fa fa-camera"></i> 3 </span>
+                                <a><img class="thumbnail no-margin" ng-src="{{'../' + (gift.Image1Path || gift.Image2Path || gift.Image3Path) }}"
+                                        alt="img" style="max-height:50px;"></a>
                             </div>
                         </div>
                         <div class="col-sm-7 add-desc-box">
@@ -125,5 +118,5 @@
         <!--/.page-content-->
 
     </div>
-    
+
 </div>
