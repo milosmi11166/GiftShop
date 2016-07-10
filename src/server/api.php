@@ -150,15 +150,26 @@
                 if($number_of_url_elements==1 and $url_elements[1]=='category'){
                     
                     $data=$db->readCategories();
-                    $status=200;
+                    
+					if($data != NULL){
+                        $status=200;
+                    }else{
+                        $data = json_encode(array("message"=>"Internal server error"));
+                        $status = 500;
+                    }
                 }
                 else if($number_of_url_elements==3 and $url_elements[1]=='user' and $url_elements[2]=='id'){
                     if(authorizeUser() != null){
-                    $id = $url_elements[3];
+						$id = $url_elements[3];
 
-                    $data=$db->readUser($id);
+						$data=$db->readUser($id);
                     
-                    $status=200;
+						if($data != NULL){
+							$status=200;
+						}else{
+							$data = json_encode(array("message"=>"Not found"));
+							$status = 404;
+						}
                     }else{
                         $status = 401;
                     }
@@ -170,7 +181,12 @@
 
                         $data=$db->readGift($id);
 
-                        $status=200;
+                        if($data != NULL){
+							$status=200;
+						}else{
+							$data = json_encode(array("message"=>"Not found"));
+							$status = 404;
+						}
                     }else{
                             $status = 401;
                     }
@@ -182,7 +198,12 @@
 
                         $data=$db->readGiftsForOwner($ownerId);
 
-                        $status=200;
+                        if($data != NULL){
+							$status=200;
+						}else{
+							$data = json_encode(array("message"=>"Internal server error"));
+							$status = 500;
+						}
                     }else{
                         $status = 401;
                     }
@@ -193,7 +214,12 @@
 
                         $data=$db->readOffersForOwner($ownerId);
 
-                        $status=200;
+                        if($data != NULL){
+							$status=200;
+						}else{
+							$data = json_encode(array("message"=>"Internal server error"));
+							$status = 500;
+						}
                      }else{
                         $status = 401;
                      }   
@@ -216,7 +242,12 @@
                     
                     $data=$db->readGiftsForCategory($ownerId, $categoryId);
                     
-                    $status=200;
+                    if($data != NULL){
+                        $status=200;
+                    }else{
+                        $data = json_encode(array("message"=>"Internal server error"));
+                        $status = 500;
+                    }
                 }
                 else if($number_of_url_elements==3 and $url_elements[1]=='gift' and $url_elements[3]=='offers'){
                     
@@ -225,7 +256,12 @@
 
                         $data=$db->readOffersForGift($giftId);
 
-                        $status=200;
+                        if($data != NULL){
+							$status=200;
+						}else{
+							$data = json_encode(array("message"=>"Internal server error"));
+							$status = 500;
+						}
                      }else{
                         $status = 401;
                      }   
@@ -243,7 +279,12 @@
 
                         $data = $createdUser->toJSON();
 
-                        $status=201;
+                        if($data != NULL){
+                            $status=201;
+                        }else{
+                            $data = json_encode(array("message"=>"Internal server error"));
+                            $status = 500;
+                        }
               }
               //Allow anonymous
                else if($number_of_url_elements==2 and $url_elements[1]=='user' and $url_elements[2]=='login'){
@@ -290,7 +331,12 @@
 
                         $data = $createdGift->toJSON();
 
-                        $status=201;
+                        if($data != NULL){
+                            $status=201;
+                        }else{
+                            $data = json_encode(array("message"=>"Internal server error"));
+                            $status = 500;
+                        }
                      }else{
                         $status = 401;
                      }   
@@ -306,7 +352,12 @@
 
                         $data = $createdOffer->toJSON();
 
-                        $status=201;
+                        if($data != NULL){
+                            $status=201;
+                        }else{
+                            $data = json_encode(array("message"=>"Internal server error"));
+                            $status = 500;
+                        }
                     }else{
                         $status = 401;
                      }  
@@ -345,7 +396,12 @@
 
                         $data = $updatedOffer->toJSON();
 
-                        $status=200;
+                        if($data != NULL){
+                            $status=200;
+                        }else{
+                            $data = json_encode(array("message"=>"Bad uri"));
+                            $status = 400;
+                        }
                     }else{
                         $status = 401;
                     }  
@@ -362,7 +418,12 @@
 
                         $data = $updatedUser->toJSON();
 
-                        $status=200;
+                        if($data != NULL){
+                            $status=200;
+                        }else{
+                            $data = json_encode(array("message"=>"Bad uri"));
+                            $status = 400;
+                        }
                     }else{
                         $status = 401;
                     } 
@@ -378,7 +439,12 @@
 
                         $data = $updatedUser->toJSON();
 
-                        $status=200;
+                        if($data != NULL){
+                            $status=200;
+                        }else{
+                            $data = json_encode(array("message"=>"Bad uri"));
+                            $status = 400;
+                        }
                     }else{
                         $status = 401;
                     } 
@@ -397,7 +463,12 @@
 
                         $data = "";
 
-                        $status=200;
+                        if($data != NULL){
+							$status=200;
+						}else{
+							$data = json_encode(array("message"=>"Not found"));
+							$status = 404;
+						}
                     }else{
                         $status = 401;
                     } 
